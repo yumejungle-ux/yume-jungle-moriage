@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { CSSProperties } from "react";
 import SiteMotion from "./SiteMotion";
 import XTimeline from "./XTimeline";
 
@@ -47,6 +48,23 @@ const promises = [
 
 const keywords = ["想い", "言葉", "夢", "挑戦", "応援", "ご縁", "希望"];
 
+function HiddenWords({ items }: { items: Array<{ word: string; number: string; top: string; left: string; tilt: string }> }) {
+  return (
+    <div className="section-secrets" aria-hidden="true">
+      {items.map((item) => (
+        <span
+          key={item.word}
+          className="hidden-word"
+          data-word={item.word}
+          style={{ "--secret-top": item.top, "--secret-left": item.left, "--secret-tilt": item.tilt } as CSSProperties}
+        >
+          <small>{item.number}</small>{item.word}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 export default function Home() {
   return (
     <main>
@@ -64,6 +82,10 @@ export default function Home() {
       </header>
 
       <section className="hero" id="top">
+        <HiddenWords items={[
+          { word: "想い", number: "01", top: "27%", left: "82%", tilt: "-7deg" },
+          { word: "言葉", number: "02", top: "73%", left: "17%", tilt: "5deg" },
+        ]} />
         <div className="hero-bg" aria-hidden="true" />
         <div className="hero-shade" aria-hidden="true" />
         <div className="hero-content">
@@ -140,6 +162,10 @@ export default function Home() {
       </section>
 
       <section className="movie-section" id="movie">
+        <HiddenWords items={[
+          { word: "夢", number: "03", top: "24%", left: "86%", tilt: "-5deg" },
+          { word: "覚悟", number: "04", top: "76%", left: "11%", tilt: "6deg" },
+        ]} />
         <div className="section-kicker light">03 / OFFICIAL FILM</div>
         <div className="movie-heading">
           <h2>言葉が、熱になる。<br />会場の空気を体感する。</h2>
@@ -194,6 +220,10 @@ export default function Home() {
       </section>
 
       <section className="schedule" aria-label="開催情報">
+        <HiddenWords items={[
+          { word: "主人公", number: "05", top: "19%", left: "82%", tilt: "-6deg" },
+          { word: "挑戦", number: "06", top: "80%", left: "12%", tilt: "5deg" },
+        ]} />
         <div className="schedule-heading">
           <div className="section-kicker light">06 / NEXT SESSION</div>
           <h2>次の開催日時を、<br />公式LINEで先行案内。</h2>
@@ -210,6 +240,10 @@ export default function Home() {
       <XTimeline />
 
       <section className="line-cta" id="official-line">
+        <HiddenWords items={[
+          { word: "希望", number: "09", top: "24%", left: "85%", tilt: "-5deg" },
+          { word: "行動", number: "10", top: "78%", left: "13%", tilt: "5deg" },
+        ]} />
         <div className="cta-glow" aria-hidden="true" />
         <div className="line-mark" aria-hidden="true">LINE</div>
         <img

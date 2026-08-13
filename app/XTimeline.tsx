@@ -57,6 +57,10 @@ export default function XTimeline() {
 
   return (
     <section className="x-feed" id="latest-x" aria-labelledby="x-feed-title">
+      <div className="section-secrets" aria-hidden="true">
+        <span className="hidden-word" data-word="応援" style={{ "--secret-top": "17%", "--secret-left": "86%", "--secret-tilt": "-7deg" } as React.CSSProperties}><small>07</small>応援</span>
+        <span className="hidden-word" data-word="ご縁" style={{ "--secret-top": "82%", "--secret-left": "11%", "--secret-tilt": "6deg" } as React.CSSProperties}><small>08</small>ご縁</span>
+      </div>
       <div className="x-feed-heading">
         <div className="section-kicker light">07 / EVENT STORIES</div>
         <h2 id="x-feed-title">参加する前に、<br /><span>会場の今を見る。</span></h2>

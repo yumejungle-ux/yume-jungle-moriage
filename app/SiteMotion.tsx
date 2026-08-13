@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 
 const OPENING_LINES = [
   "想いは言葉に。夢は挑戦に。",
   "挑戦は、誰かの希望に。",
 ];
+
+const HIDDEN_WORDS = ["想い", "言葉", "夢", "覚悟", "主人公", "挑戦", "応援", "ご縁", "希望", "行動"];
 
 function AnimatedLine({ text, offset }: { text: string; offset: number }) {
   return (
@@ -25,6 +27,10 @@ function AnimatedLine({ text, offset }: { text: string; offset: number }) {
 
 export default function SiteMotion() {
   const [opening, setOpening] = useState<"idle" | "playing" | "leaving" | "done">("idle");
+  const [foundWords, setFoundWords] = useState<string[]>([]);
+  const [lastFound, setLastFound] = useState("");
+  const [rewardOpen, setRewardOpen] = useState(false);
+  const foundWordsRef = useRef(new Set<string>());
   const lines = useMemo(() => OPENING_LINES, []);
 
   useEffect(() => {
@@ -82,12 +88,51 @@ export default function SiteMotion() {
     updateScroll();
 
     const glow = document.querySelector<HTMLElement>(".pointer-glow");
+    const secrets = Array.from(document.querySelectorAll<HTMLElement>(".hidden-word"));
+    let foundTimer = 0;
+    const discoverAt = (clientX: number, clientY: number, radius: number) => {
+      secrets.forEach((secret) => {
+        const word = secret.dataset.word;
+        if (!word) return;
+        if (foundWordsRef.current.has(word)) {
+          secret.classList.remove("is-lit");
+          return;
+        }
+        const rect = secret.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const distance = Math.hypot(clientX - centerX, clientY - centerY);
+        secret.classList.toggle("is-lit", distance <= radius + 105);
+        if (distance <= radius) {
+          foundWordsRef.current.add(word);
+          secret.classList.add("is-found");
+          secret.classList.remove("is-lit");
+          setFoundWords(Array.from(foundWordsRef.current));
+          setLastFound(word);
+          if (foundWordsRef.current.size === HIDDEN_WORDS.length) setRewardOpen(true);
+          window.clearTimeout(foundTimer);
+          foundTimer = window.setTimeout(() => setLastFound(""), 1800);
+        }
+      });
+    };
     const onPointerMove = (event: PointerEvent) => {
       if (!glow || event.pointerType === "touch") return;
       glow.style.transform = `translate3d(${event.clientX - 190}px, ${event.clientY - 190}px, 0)`;
       glow.classList.add("is-active");
+      root.style.setProperty("--torch-x", `${event.clientX}px`);
+      root.style.setProperty("--torch-y", `${event.clientY}px`);
+      discoverAt(event.clientX, event.clientY, 118);
+    };
+    const onTouchReveal = (event: PointerEvent) => {
+      if (event.pointerType !== "touch") return;
+      root.style.setProperty("--torch-x", `${event.clientX}px`);
+      root.style.setProperty("--torch-y", `${event.clientY}px`);
+      root.classList.add("touch-torch-active");
+      discoverAt(event.clientX, event.clientY, 105);
+      window.setTimeout(() => root.classList.remove("touch-torch-active"), 650);
     };
     window.addEventListener("pointermove", onPointerMove, { passive: true });
+    window.addEventListener("pointerdown", onTouchReveal, { passive: true });
 
     const magneticTargets = Array.from(
       document.querySelectorAll<HTMLElement>(".section-cta, .primary-button, .line-search")
@@ -121,6 +166,8 @@ export default function SiteMotion() {
       observer.disconnect();
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerdown", onTouchReveal);
+      window.clearTimeout(foundTimer);
       cleanups.forEach((cleanup) => cleanup());
       root.classList.remove("motion-ready", "intro-playing");
       root.classList.remove("page-scrolled");
@@ -154,6 +201,23 @@ export default function SiteMotion() {
         <i className="route-marker" />
         <span className="route-goal">DREAM</span>
       </div>
+      <div className={`treasure-counter${foundWords.length === HIDDEN_WORDS.length ? " is-complete" : ""}`} aria-live="polite">
+        <small>HIDDEN WORDS</small>
+        <strong>{String(foundWords.length).padStart(2, "0")} <i>/ 10</i></strong>
+        <span>{foundWords.length === HIDDEN_WORDS.length ? "想いは言葉に。夢は行動に。" : "ライトで言葉を探す"}</span>
+      </div>
+      {lastFound && <div className="secret-found-toast" aria-live="polite"><small>DISCOVERED</small><strong>{lastFound}</strong></div>}
+      {foundWords.length === HIDDEN_WORDS.length && rewardOpen && (
+        <div className="treasure-complete" role="dialog" aria-modal="true" aria-label="発見者限定特典">
+          <button type="button" className="treasure-close" onClick={() => setRewardOpen(false)} aria-label="閉じる">×</button>
+          <small>ALL WORDS DISCOVERED</small>
+          <strong>発見者限定特典、解放。</strong>
+          <p>あなたが、次の主人公です。<br />公式LINEで合言葉を送ると、参加時の限定特典をご案内します。</p>
+          <div className="treasure-code"><small>SECRET WORD</small><b>JUNGLE10</b></div>
+          <a href="#official-line" onClick={() => setRewardOpen(false)}>公式LINEで特典を受け取る <span>↗</span></a>
+          <em>この画面はスクリーンショットで保存できます</em>
+        </div>
+      )}
       <div className="pointer-glow" aria-hidden="true" />
     </>
   );
