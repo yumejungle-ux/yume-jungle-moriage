@@ -482,8 +482,10 @@ main { position: relative; isolation: isolate; overflow: clip; }
 .x-timeline-frame::before { content: ""; position: absolute; z-index: 0; right: -24%; top: -8%; width: 58%; aspect-ratio: 16/9; background: url("/assets/vine-ribbon-v1.png") center/contain no-repeat; opacity: .26; filter: saturate(.72) brightness(.7); transform: scaleX(-1) rotate(-6deg); pointer-events: none; }
 .x-timeline-frame > * { position: relative; z-index: 1; }
 .x-timeline-label { position: absolute; z-index: 2; left: 22px; top: 10px; color: rgba(244,197,66,.8); font: 800 7px Arial,sans-serif; letter-spacing: .2em; }
-.x-live-timeline { display: block; width: 100%; height: 438px; border: 0; border-radius: 15px; background: transparent; opacity: 0; transition: opacity .55s ease; }
-.x-timeline-frame.is-loaded .x-live-timeline { opacity: 1; }
+.x-timeline-frame .twitter-timeline { display: block; width: 100%; min-height: 438px; color: transparent; opacity: 0; transition: opacity .55s ease; }
+.x-timeline-frame.is-loaded .twitter-timeline, .x-timeline-frame.is-loaded .twitter-timeline-rendered { opacity: 1; }
+.x-timeline-frame .twitter-timeline-rendered { width: 100% !important; max-height: 438px !important; overflow: auto !important; border-radius: 15px; opacity: 0; transition: opacity .55s ease; }
+.x-timeline-frame .twitter-timeline-rendered iframe { width: 100% !important; min-width: 100% !important; height: 438px !important; min-height: 438px !important; }
 .x-timeline-loading { position: absolute; z-index: 3; inset: 28px 12px 54px; display: grid; place-content: center; justify-items: center; gap: 9px; border-radius: 15px; color: rgba(255,255,255,.78); background: radial-gradient(circle at 50% 46%,rgba(25,107,76,.28),rgba(2,18,12,.92) 72%); text-align: center; }
 .x-timeline-loading i { width: 34px; height: 34px; border: 2px solid rgba(244,197,66,.2); border-top-color: var(--yellow); border-radius: 50%; animation: xTimelineSpin .85s linear infinite; }
 .x-timeline-loading strong { color: var(--yellow); font: 800 11px Arial,sans-serif; letter-spacing: .16em; }
@@ -648,7 +650,9 @@ footer > small { grid-column: 2; grid-row: 1 / 3; font: 9px Arial, sans-serif; l
   .x-author-copy strong { font-size: 17px; }
   .x-feed-note { margin-top: 22px; font-size: 10px; }
   .x-timeline-frame { min-height: 500px; max-height: 500px; margin: 0 -4px; border-radius: 18px; padding: 27px 7px 50px; }
-  .x-live-timeline { height: 421px; }
+  .x-timeline-frame .twitter-timeline { min-height: 421px; }
+  .x-timeline-frame .twitter-timeline-rendered { max-height: 421px !important; }
+  .x-timeline-frame .twitter-timeline-rendered iframe { height: 421px !important; min-height: 421px !important; }
   .x-timeline-loading { inset: 27px 7px 50px; }
   .x-timeline-direct { left: 17px; right: 17px; bottom: 10px; font-size: 10px; }
   .line-cta h2 { font-size: 53px; }
