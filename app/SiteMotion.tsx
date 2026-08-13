@@ -30,6 +30,7 @@ export default function SiteMotion() {
   const [foundWords, setFoundWords] = useState<string[]>([]);
   const [lastFound, setLastFound] = useState("");
   const [rewardOpen, setRewardOpen] = useState(false);
+  const [guideOpen, setGuideOpen] = useState(false);
   const foundWordsRef = useRef(new Set<string>());
   const lines = useMemo(() => OPENING_LINES, []);
 
@@ -52,6 +53,7 @@ export default function SiteMotion() {
     const leaveTimer = window.setTimeout(() => setOpening("leaving"), reducedMotion ? 250 : 3200);
     const finishTimer = window.setTimeout(() => {
       setOpening("done");
+      setGuideOpen(true);
       root.classList.remove("intro-playing");
     }, reducedMotion ? 450 : 3720);
 
@@ -116,7 +118,16 @@ export default function SiteMotion() {
       });
     };
     const onPointerMove = (event: PointerEvent) => {
-      if (!glow || event.pointerType === "touch") return;
+      if (!glow) return;
+      if (event.pointerType === "touch") {
+        glow.style.transform = `translate3d(${event.clientX - 125}px, ${event.clientY - 125}px, 0)`;
+        glow.classList.add("is-active");
+        root.style.setProperty("--torch-x", `${event.clientX}px`);
+        root.style.setProperty("--torch-y", `${event.clientY}px`);
+        root.classList.add("touch-torch-active");
+        discoverAt(event.clientX, event.clientY, 105);
+        return;
+      }
       glow.style.transform = `translate3d(${event.clientX - 190}px, ${event.clientY - 190}px, 0)`;
       glow.classList.add("is-active");
       root.style.setProperty("--torch-x", `${event.clientX}px`);
@@ -125,14 +136,25 @@ export default function SiteMotion() {
     };
     const onTouchReveal = (event: PointerEvent) => {
       if (event.pointerType !== "touch") return;
+      if (glow) {
+        glow.style.transform = `translate3d(${event.clientX - 125}px, ${event.clientY - 125}px, 0)`;
+        glow.classList.add("is-active");
+      }
       root.style.setProperty("--torch-x", `${event.clientX}px`);
       root.style.setProperty("--torch-y", `${event.clientY}px`);
       root.classList.add("touch-torch-active");
       discoverAt(event.clientX, event.clientY, 105);
-      window.setTimeout(() => root.classList.remove("touch-torch-active"), 650);
+    };
+    const onTouchEnd = (event: PointerEvent) => {
+      if (event.pointerType !== "touch") return;
+      root.classList.remove("touch-torch-active");
+      glow?.classList.remove("is-active");
+      secrets.forEach((secret) => secret.classList.remove("is-lit"));
     };
     window.addEventListener("pointermove", onPointerMove, { passive: true });
     window.addEventListener("pointerdown", onTouchReveal, { passive: true });
+    window.addEventListener("pointerup", onTouchEnd, { passive: true });
+    window.addEventListener("pointercancel", onTouchEnd, { passive: true });
 
     const magneticTargets = Array.from(
       document.querySelectorAll<HTMLElement>(".section-cta, .primary-button, .line-search")
@@ -167,6 +189,8 @@ export default function SiteMotion() {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerdown", onTouchReveal);
+      window.removeEventListener("pointerup", onTouchEnd);
+      window.removeEventListener("pointercancel", onTouchEnd);
       window.clearTimeout(foundTimer);
       cleanups.forEach((cleanup) => cleanup());
       root.classList.remove("motion-ready", "intro-playing");
@@ -187,6 +211,21 @@ export default function SiteMotion() {
               <AnimatedLine key={line} text={line} offset={220 + index * 650} />
             ))}
             <i />
+          </div>
+        </div>
+      )}
+      {guideOpen && (
+        <div className="treasure-guide" role="dialog" aria-modal="true" aria-labelledby="treasure-guide-title">
+          <div className="treasure-guide-card">
+            <small>SECRET EXPLORATION</small>
+            <h2 id="treasure-guide-title">このページには、<br /><em>10個の言葉</em>が隠されています。</h2>
+            <p>暗いジャングルをライトで探索し、理念につながる言葉をすべて見つけてください。</p>
+            <div className="guide-actions">
+              <span><b>PC</b> カーソルを動かす</span>
+              <span><b>スマホ</b> 指でなぞる</span>
+            </div>
+            <strong className="guide-reward">10個見つけると、参加時の限定特典が解放。</strong>
+            <button type="button" onClick={() => setGuideOpen(false)}>探索を始める <span>↗</span></button>
           </div>
         </div>
       )}
