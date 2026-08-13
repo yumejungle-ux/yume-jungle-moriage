@@ -43,11 +43,11 @@ export default function SiteMotion() {
     root.classList.add("motion-ready", "intro-playing");
 
     const frame = window.requestAnimationFrame(() => setOpening("playing"));
-    const leaveTimer = window.setTimeout(() => setOpening("leaving"), reducedMotion ? 250 : 2050);
+    const leaveTimer = window.setTimeout(() => setOpening("leaving"), reducedMotion ? 250 : 3200);
     const finishTimer = window.setTimeout(() => {
       setOpening("done");
       root.classList.remove("intro-playing");
-    }, reducedMotion ? 450 : 2520);
+    }, reducedMotion ? 450 : 3720);
 
     const observer = new IntersectionObserver(
       (entries) => {
