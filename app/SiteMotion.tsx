@@ -65,7 +65,14 @@ export default function SiteMotion() {
     let scrollFrame = 0;
     const updateScroll = () => {
       scrollFrame = 0;
-      root.style.setProperty("--parallax-shift", `${Math.min(window.scrollY * 0.075, 86)}px`);
+      const scrollY = window.scrollY;
+      const scrollRange = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+      const journeyProgress = Math.min(Math.max(scrollY / scrollRange, 0), 1);
+      root.style.setProperty("--parallax-shift", `${Math.min(scrollY * 0.075, 86)}px`);
+      root.style.setProperty("--jungle-drift", `${scrollY * 0.035}px`);
+      root.style.setProperty("--jungle-drift-reverse", `${scrollY * -0.022}px`);
+      root.style.setProperty("--jungle-sway", `${Math.sin(scrollY / 340) * 2.4}deg`);
+      root.style.setProperty("--journey-progress", `${journeyProgress * 100}%`);
     };
     const onScroll = () => {
       if (!scrollFrame) scrollFrame = window.requestAnimationFrame(updateScroll);
@@ -134,6 +141,16 @@ export default function SiteMotion() {
           </div>
         </div>
       )}
+      <div className="jungle-world" aria-hidden="true">
+        <img className="jungle-layer jungle-layer-one" src="/assets/cta-arrow-vines-v2.png" alt="" />
+        <img className="jungle-layer jungle-layer-two" src="/assets/cta-arrow-vines-v2.png" alt="" />
+        <img className="jungle-layer jungle-layer-three" src="/assets/cta-arrow-vines-v2.png" alt="" />
+        <div className="treasure-route">
+          <span className="route-origin">START</span>
+          <i className="route-marker" />
+          <span className="route-goal">DREAM</span>
+        </div>
+      </div>
       <div className="pointer-glow" aria-hidden="true" />
     </>
   );
