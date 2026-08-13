@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 
 declare global {
   interface Window {
@@ -13,35 +13,16 @@ declare global {
 }
 
 const X_PROFILE_URL = "https://x.com/momongadamon333";
+const LIVE_TIMELINE_URL =
+  "https://syndication.twitter.com/srv/timeline-profile/screen-name/momongadamon333?theme=dark&lang=ja&dnt=true&transparent=true&hideHeader=true&hideFooter=true&hideBorder=true&maxHeight=476";
 
 export default function XTimeline() {
-  const timelineRef = useRef<HTMLDivElement>(null);
+  const [timelineLoaded, setTimelineLoaded] = useState(false);
+  const [timelineSlow, setTimelineSlow] = useState(false);
 
   useEffect(() => {
-    const loadTimeline = () => {
-      if (timelineRef.current && window.twttr?.widgets) {
-        window.twttr.widgets.load(timelineRef.current);
-      }
-    };
-
-    const existingScript = document.querySelector<HTMLScriptElement>(
-      'script[src="https://platform.twitter.com/widgets.js"]'
-    );
-
-    if (existingScript) {
-      loadTimeline();
-      existingScript.addEventListener("load", loadTimeline, { once: true });
-      return () => existingScript.removeEventListener("load", loadTimeline);
-    }
-
-    const script = document.createElement("script");
-    script.src = "https://platform.twitter.com/widgets.js";
-    script.async = true;
-    script.charset = "utf-8";
-    script.addEventListener("load", loadTimeline, { once: true });
-    document.body.appendChild(script);
-
-    return () => script.removeEventListener("load", loadTimeline);
+    const slowTimer = window.setTimeout(() => setTimelineSlow(true), 4500);
+    return () => window.clearTimeout(slowTimer);
   }, []);
 
   return (
@@ -56,23 +37,31 @@ export default function XTimeline() {
           </span>
           <span className="x-author-copy">
             <small>FROM MORIAGE / OFFICIAL X</small>
-            <strong>森上さんの発信</strong>
+            <strong>もりもりの今日の発信</strong>
             <span>@momongadamon333</span>
           </span>
         </div>
         <small className="x-feed-note">参加方法・開催日程の確認は、この下の公式LINEから。</small>
       </div>
-      <div className="x-timeline-frame" ref={timelineRef}>
+      <div className={`x-timeline-frame${timelineLoaded ? " is-loaded" : ""}`}>
         <span className="x-timeline-label">LIVE / MORIAGE CONNECT</span>
-        <a
-          className="twitter-timeline"
-          data-theme="dark"
-          data-height="480"
-          data-chrome="noheader nofooter noborders transparent"
-          data-dnt="true"
-          href={X_PROFILE_URL}
-        >
-          @momongadamon333 の最新投稿を見る
+        {!timelineLoaded && (
+          <div className="x-timeline-loading" aria-live="polite">
+            <i aria-hidden="true" />
+            <strong>{timelineSlow ? "Xの投稿を読み込んでいます" : "LIVE TIMELINE"}</strong>
+            <span>もりもりの最新投稿を取得中</span>
+          </div>
+        )}
+        <iframe
+          className="x-live-timeline"
+          src={LIVE_TIMELINE_URL}
+          title="もりもりの今日のX投稿"
+          loading="lazy"
+          scrolling="yes"
+          onLoad={() => setTimelineLoaded(true)}
+        />
+        <a className="x-timeline-direct" href={X_PROFILE_URL} target="_blank" rel="noreferrer">
+          Xで最新投稿を開く <span aria-hidden="true">↗</span>
         </a>
       </div>
     </section>
