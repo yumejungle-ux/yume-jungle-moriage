@@ -8,6 +8,23 @@ export const metadata: Metadata = {
 
 const LINE_TARGET = "#official-line";
 
+function SectionCta({
+  eyebrow,
+  title,
+  light = false,
+}: {
+  eyebrow: string;
+  title: string;
+  light?: boolean;
+}) {
+  return (
+    <a className={`section-cta${light ? " light" : ""}`} href={LINE_TARGET}>
+      <span><small>{eyebrow}</small><strong>{title}</strong></span>
+      <b aria-hidden="true">↗</b>
+    </a>
+  );
+}
+
 const promises = [
   {
     number: "01",
@@ -39,7 +56,7 @@ export default function Home() {
           <a href="#concept">理念</a>
           <a href="#experience">体験</a>
           <a href="#movie">映像</a>
-          <a className="header-cta" href={LINE_TARGET}>公式LINEへ</a>
+          <a className="header-cta" href={LINE_TARGET}><span>LINE</span>参加申し込み</a>
         </nav>
       </header>
 
@@ -48,12 +65,7 @@ export default function Home() {
         <div className="hero-shade" aria-hidden="true" />
         <div className="hero-content">
           <div className="eyebrow"><i /> TOKYO · OSAKA · NATIONWIDE</div>
-          <div className="hero-logo-modern" aria-label="夢のジャングル 森上交流会">
-            <span className="modern-overline">YUME NO /</span>
-            <span className="modern-title"><b>夢の</b>ジャングル</span>
-            <span className="modern-arrow" aria-hidden="true"><i /></span>
-            <span className="modern-sub">森上交流会 <small>MORIAGE CONNECT</small></span>
-          </div>
+          <img className="hero-brand-logo" src="/assets/logo-upward.png" alt="夢のジャングル 森上交流会" />
           <p className="hero-lead">
             想いは言葉に。夢は挑戦に。<br />
             挑戦は、誰かの希望に。
@@ -100,6 +112,7 @@ export default function Home() {
             ))}
           </div>
         </div>
+        <SectionCta eyebrow="まずはお気軽に" title="無料セッションについて聞く" />
       </section>
 
       <section className="experience" id="experience">
@@ -120,6 +133,7 @@ export default function Home() {
             </article>
           ))}
         </div>
+        <SectionCta eyebrow="夢を動かす一歩" title="次回の交流会に申し込む" />
       </section>
 
       <section className="movie-section" id="movie">
@@ -134,6 +148,7 @@ export default function Home() {
           </video>
           <span className="movie-label">YUME NO JUNGLE / 2026</span>
         </div>
+        <SectionCta eyebrow="映像の熱を、会場で" title="開催日程をLINEで受け取る" light />
       </section>
 
       <section className="gallery" aria-label="イベントの様子">
@@ -143,7 +158,7 @@ export default function Home() {
         </figure>
         <div className="gallery-copy">
           <div className="section-kicker">04 / MOMENTS</div>
-          <h2>一人ひとりが、<br /><em>主人公。</em></h2>
+          <h2>一人ひとりが、<em>主人公。</em></h2>
           <p>
             年齢も、肩書きも、歩んできた道も違う。だからこそ、ここで交わる言葉が新しい可能性をひらきます。
           </p>
@@ -156,17 +171,37 @@ export default function Home() {
           <img src="/assets/moment-connect.jpg" alt="多くの参加者が交流する会場" />
           <figcaption>ご縁がつながる。</figcaption>
         </figure>
+        <div className="gallery-cta">
+          <SectionCta eyebrow="あなたも、この輪の中へ" title="参加方法を公式LINEで確認" />
+        </div>
       </section>
 
       <section className="audience">
         <div className="section-kicker">05 / WHO IT&apos;S FOR</div>
-        <h2>こんな想いを持つ、<br />あなたへ。</h2>
+        <h2>こんな想いを持つ、あなたへ。</h2>
         <ul>
           <li><span>01</span>本気の夢を、言葉にしてみたい</li>
           <li><span>02</span>自分の可能性を広げるご縁に出会いたい</li>
           <li><span>03</span>挑戦する仲間と、互いに応援し合いたい</li>
           <li><span>04</span>人生を動かす、次の一歩を踏み出したい</li>
         </ul>
+        <div className="audience-cta">
+          <SectionCta eyebrow="迷っている方も歓迎" title="まずは無料セッションから" />
+        </div>
+      </section>
+
+      <section className="schedule" aria-label="開催情報">
+        <div className="schedule-heading">
+          <div className="section-kicker light">06 / NEXT SESSION</div>
+          <h2>次の開催日時を、<br />公式LINEで先行案内。</h2>
+          <p>東京・大阪を中心に全国で開催。会場・日時・参加方法の最新情報を、公式LINEでお届けします。</p>
+        </div>
+        <div className="schedule-card">
+          <div><small>NEXT DATE</small><strong>次回開催日時</strong><span>公式LINEで先行公開</span></div>
+          <div><small>AREA</small><strong>東京・大阪</strong><span>全国へ順次展開</span></div>
+          <div><small>ENTRY</small><strong>参加申し込み</strong><span>公式LINEで受付</span></div>
+          <SectionCta eyebrow="日程確認・参加相談" title="公式LINEで無料セッションへ" light />
+        </div>
       </section>
 
       <section className="line-cta" id="official-line">
@@ -183,9 +218,9 @@ export default function Home() {
           開催情報・会場・お申し込みについては、<br className="desktop-only" />公式LINEからご案内します。
         </p>
         <a className="line-search" href="https://line.me/" target="_blank" rel="noreferrer" aria-label="LINEを開いて森上交流会を検索">
-          <span className="search-icon">⌕</span>
-          <span className="search-copy"><small>LINEで検索</small><strong>森上交流会</strong></span>
-          <span className="search-submit">検索 ↗</span>
+          <span className="line-bubble">LINE</span>
+          <span className="search-copy"><small>公式LINEから参加申し込み</small><strong>森上交流会をLINEで検索</strong></span>
+          <span className="search-submit">LINEを開く <b>↗</b></span>
         </a>
         <small className="cta-note">※公式LINEの専用URLは公開時に設定できます</small>
       </section>
@@ -197,7 +232,9 @@ export default function Home() {
       </footer>
 
       <a className="mobile-line-bar" href={LINE_TARGET}>
-        <span>参加申し込み</span><strong>公式LINEへ ↗</strong>
+        <span className="mobile-line-icon">LINE</span>
+        <span className="mobile-line-copy"><small>イベント参加申し込み</small><strong>公式LINEで申し込む</strong></span>
+        <b className="mobile-line-arrow">↗</b>
       </a>
     </main>
   );
