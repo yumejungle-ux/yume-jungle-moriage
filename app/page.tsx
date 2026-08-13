@@ -21,7 +21,7 @@ function SectionCta({
   return (
     <a className={`section-cta${light ? " light" : ""}`} href={LINE_TARGET}>
       <span><small>{eyebrow}</small><strong>{title}</strong></span>
-      <img className="cta-arrow-img" src="/assets/cta-arrow-vines-v2.png" alt="" aria-hidden="true" />
+      <i className="cta-direction" aria-hidden="true"><b /></i>
     </a>
   );
 }
@@ -76,7 +76,7 @@ export default function Home() {
             <a className="primary-button" href={LINE_TARGET}>
               <span>イベントへ申し込む</span>
               <b>公式LINE</b>
-              <img className="arrow-img" src="/assets/cta-arrow-vines-v2.png" alt="" aria-hidden="true" />
+              <i className="button-direction" aria-hidden="true"><b /></i>
             </a>
             <a className="text-link" href="#movie">PVを見る <span>↓</span></a>
           </div>
@@ -222,7 +222,7 @@ export default function Home() {
         <a className="line-search" href="https://line.me/" target="_blank" rel="noreferrer" aria-label="LINEを開いて森上交流会を検索">
           <span className="line-bubble">LINE</span>
           <span className="search-copy"><small>公式LINEから参加申し込み</small><strong>森上交流会をLINEで検索</strong></span>
-          <span className="search-submit">LINEを開く <img className="search-arrow-img" src="/assets/cta-arrow-vines-v2.png" alt="" aria-hidden="true" /></span>
+          <span className="search-submit">LINEを開く <i className="search-direction" aria-hidden="true" /></span>
         </a>
         <small className="cta-note">※公式LINEの専用URLは公開時に設定できます</small>
       </section>
@@ -236,7 +236,7 @@ export default function Home() {
       <a className="mobile-line-bar" href={LINE_TARGET}>
         <span className="mobile-line-icon">LINE</span>
         <span className="mobile-line-copy"><small>イベント参加申し込み</small><strong>公式LINEで申し込む</strong></span>
-        <img className="mobile-line-arrow" src="/assets/cta-arrow-vines-v2.png" alt="" aria-hidden="true" />
+        <i className="mobile-line-direction" aria-hidden="true" />
       </a>
     </main>
   );

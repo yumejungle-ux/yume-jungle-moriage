@@ -68,6 +68,7 @@ export default function SiteMotion() {
       const scrollY = window.scrollY;
       const scrollRange = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
       const journeyProgress = Math.min(Math.max(scrollY / scrollRange, 0), 1);
+      root.classList.toggle("page-scrolled", scrollY > 80);
       root.style.setProperty("--parallax-shift", `${Math.min(scrollY * 0.075, 86)}px`);
       root.style.setProperty("--jungle-drift", `${scrollY * 0.035}px`);
       root.style.setProperty("--jungle-drift-reverse", `${scrollY * -0.022}px`);
@@ -122,6 +123,7 @@ export default function SiteMotion() {
       window.removeEventListener("pointermove", onPointerMove);
       cleanups.forEach((cleanup) => cleanup());
       root.classList.remove("motion-ready", "intro-playing");
+      root.classList.remove("page-scrolled");
     };
   }, []);
 
@@ -129,8 +131,8 @@ export default function SiteMotion() {
     <>
       {opening !== "done" && (
         <div className={`opening-intro is-${opening}`} aria-hidden="true">
-          <img className="opening-vine opening-vine-left" src="/assets/cta-arrow-vines-v2.png" alt="" />
-          <img className="opening-vine opening-vine-right" src="/assets/cta-arrow-vines-v2.png" alt="" />
+          <div className="opening-vine opening-vine-left"><i /><b /></div>
+          <div className="opening-vine opening-vine-right"><i /><b /></div>
           <div className="opening-grain" />
           <div className="opening-copy">
             <small>YUME NO JUNGLE / MORIAGE CONNECT</small>
@@ -142,9 +144,10 @@ export default function SiteMotion() {
         </div>
       )}
       <div className="jungle-world" aria-hidden="true">
-        <img className="jungle-layer jungle-layer-one" src="/assets/cta-arrow-vines-v2.png" alt="" />
-        <img className="jungle-layer jungle-layer-two" src="/assets/cta-arrow-vines-v2.png" alt="" />
-        <img className="jungle-layer jungle-layer-three" src="/assets/cta-arrow-vines-v2.png" alt="" />
+        <div className="vine-band vine-band-one"><i /><b /><span /></div>
+        <div className="vine-band vine-band-two"><i /><b /><span /></div>
+        <div className="vine-band vine-band-three"><i /><b /><span /></div>
+        <div className="vine-band vine-band-four"><i /><b /><span /></div>
         <div className="treasure-route">
           <span className="route-origin">START</span>
           <i className="route-marker" />
