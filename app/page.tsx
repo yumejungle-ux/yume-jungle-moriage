@@ -20,7 +20,7 @@ function SectionCta({
   return (
     <a className={`section-cta${light ? " light" : ""}`} href={LINE_TARGET}>
       <span><small>{eyebrow}</small><strong>{title}</strong></span>
-      <b aria-hidden="true">↗</b>
+      <img className="cta-arrow-img" src="/assets/cta-arrow-v1.png" alt="" aria-hidden="true" />
     </a>
   );
 }
@@ -50,7 +50,7 @@ export default function Home() {
     <main>
       <header className="site-header">
         <a className="mini-logo" href="#top" aria-label="夢のジャングル トップへ">
-          <b>YJ</b><span>夢のジャングル</span><i aria-hidden="true">↗</i>
+          <b>YJ</b><span>夢のジャングル</span><img className="mini-arrow-img" src="/assets/cta-arrow-v1.png" alt="" aria-hidden="true" />
         </a>
         <nav aria-label="メインナビゲーション">
           <a href="#concept">理念</a>
@@ -74,7 +74,7 @@ export default function Home() {
             <a className="primary-button" href={LINE_TARGET}>
               <span>イベントへ申し込む</span>
               <b>公式LINE</b>
-              <span className="arrow">↗</span>
+              <img className="arrow-img" src="/assets/cta-arrow-v1.png" alt="" aria-hidden="true" />
             </a>
             <a className="text-link" href="#movie">PVを見る <span>↓</span></a>
           </div>
@@ -220,7 +220,7 @@ export default function Home() {
         <a className="line-search" href="https://line.me/" target="_blank" rel="noreferrer" aria-label="LINEを開いて森上交流会を検索">
           <span className="line-bubble">LINE</span>
           <span className="search-copy"><small>公式LINEから参加申し込み</small><strong>森上交流会をLINEで検索</strong></span>
-          <span className="search-submit">LINEを開く <b>↗</b></span>
+          <span className="search-submit">LINEを開く <img className="search-arrow-img" src="/assets/cta-arrow-v1.png" alt="" aria-hidden="true" /></span>
         </a>
         <small className="cta-note">※公式LINEの専用URLは公開時に設定できます</small>
       </section>
@@ -234,7 +234,7 @@ export default function Home() {
       <a className="mobile-line-bar" href={LINE_TARGET}>
         <span className="mobile-line-icon">LINE</span>
         <span className="mobile-line-copy"><small>イベント参加申し込み</small><strong>公式LINEで申し込む</strong></span>
-        <b className="mobile-line-arrow">↗</b>
+        <img className="mobile-line-arrow" src="/assets/cta-arrow-v1.png" alt="" aria-hidden="true" />
       </a>
     </main>
   );
