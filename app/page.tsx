@@ -52,7 +52,7 @@ export default function Home() {
       <SiteMotion />
       <header className="site-header">
         <a className="mini-logo" href="#top" aria-label="夢のジャングル トップへ">
-          <b>YJ</b><span>夢のジャングル</span><img className="mini-arrow-img" src="/assets/cta-arrow-vines-v2.png" alt="" aria-hidden="true" />
+          <img src="/assets/logo-upward.png" alt="夢のジャングル 森上交流会" />
         </a>
         <nav aria-label="メインナビゲーション">
           <a href="#concept">理念</a>
@@ -148,7 +148,7 @@ export default function Home() {
           <video controls playsInline preload="metadata" poster="/assets/group.jpg">
             <source src="/assets/yume-jungle-pv.mp4" type="video/mp4" />
           </video>
-          <span className="movie-label">YUME NO JUNGLE / 2026</span>
+          <span className="movie-label"><img src="/assets/logo-upward.png" alt="夢のジャングル 森上交流会" /></span>
         </div>
         <SectionCta eyebrow="映像の熱を、会場で" title="開催日程をLINEで受け取る" light />
       </section>
