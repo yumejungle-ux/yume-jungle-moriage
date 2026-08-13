@@ -32,7 +32,7 @@ export default function SiteMotion() {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const revealTargets = Array.from(
       document.querySelectorAll<HTMLElement>(
-        ".section-kicker, .manifesto-grid > *, .section-head > *, .promise-grid article, .movie-heading > *, .movie-frame, .gallery figure, .gallery-copy, .audience > *, .schedule-heading, .schedule-card > div, .section-cta, .line-cta > *:not(.cta-glow):not(.line-mark)"
+        ".section-kicker, .manifesto-grid > *, .section-head > *, .promise-grid article, .movie-heading > *, .movie-frame, .gallery figure, .gallery-copy, .audience > *, .schedule-heading, .schedule-card > div, .x-feed-heading > *, .x-timeline-frame, .section-cta, .line-cta > *:not(.cta-glow):not(.line-mark)"
       )
     );
 
@@ -131,8 +131,8 @@ export default function SiteMotion() {
     <>
       {opening !== "done" && (
         <div className={`opening-intro is-${opening}`} aria-hidden="true">
-          <div className="opening-vine opening-vine-left"><i /><b /></div>
-          <div className="opening-vine opening-vine-right"><i /><b /></div>
+          <img className="opening-vine opening-vine-left" src="/assets/vine-ribbon-v1.png" alt="" />
+          <img className="opening-vine opening-vine-right" src="/assets/vine-ribbon-v1.png" alt="" />
           <div className="opening-grain" />
           <div className="opening-copy">
             <small>YUME NO JUNGLE / MORIAGE CONNECT</small>
@@ -144,15 +144,15 @@ export default function SiteMotion() {
         </div>
       )}
       <div className="jungle-world" aria-hidden="true">
-        <div className="vine-band vine-band-one"><i /><b /><span /></div>
-        <div className="vine-band vine-band-two"><i /><b /><span /></div>
-        <div className="vine-band vine-band-three"><i /><b /><span /></div>
-        <div className="vine-band vine-band-four"><i /><b /><span /></div>
-        <div className="treasure-route">
-          <span className="route-origin">START</span>
-          <i className="route-marker" />
-          <span className="route-goal">DREAM</span>
-        </div>
+        <img className="vine-ribbon vine-ribbon-one" src="/assets/vine-ribbon-v1.png" alt="" />
+        <img className="vine-ribbon vine-ribbon-two" src="/assets/vine-ribbon-v1.png" alt="" />
+        <img className="vine-ribbon vine-ribbon-three" src="/assets/vine-ribbon-v1.png" alt="" />
+        <img className="vine-ribbon vine-ribbon-four" src="/assets/vine-ribbon-v1.png" alt="" />
+      </div>
+      <div className="treasure-route" aria-hidden="true">
+        <span className="route-origin">START</span>
+        <i className="route-marker" />
+        <span className="route-goal">DREAM</span>
       </div>
       <div className="pointer-glow" aria-hidden="true" />
     </>
