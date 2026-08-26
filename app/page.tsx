@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { CSSProperties } from "react";
 import SiteMotion from "./SiteMotion";
+import XTimeline from "./XTimeline";
 
 export const metadata: Metadata = { title: "夢のジャングル｜森上交流会", description: "想いを言葉にすることで、人と人生が動き出す。森下秀樹がつくる体験型コネクトライブ。" };
 const LINE_TARGET = "#official-line";
@@ -28,6 +29,7 @@ export default function Home() {
     <section className="experience-section" id="experience"><div className="experience-heading"><div><p className="story-label"><span>05</span> HOW IT WORKS</p><h2>交流では終わらない。<br /><em>人生が動き出す。</em></h2></div><p>夢のジャングルは、<br /><strong>大人も子供も本気で夢を語れる場所。</strong><br />名刺の数ではなく、心が動いた瞬間を持ち帰る。</p></div><div className="experience-cards">{experiences.map(([number,title,text]) => <article key={number}><span>{number}</span><h3>{title}</h3><p>{text}</p></article>)}</div><div className="experience-photo"><img src="/assets/moment-energy.jpg" alt="会場全体で挑戦を応援する参加者" /><p>一人の言葉が、<br />会場全体の熱になる。</p></div></section><MovieSection />
     <section className="stories-section" id="stories"><div className="stories-intro"><p className="story-label light"><span>06</span> STORIES OF CHANGE</p><h2>想いを口にした人から、<br />景色が変わっていった。</h2><p>何かを教えられたからではない。<br />本当の想いを、一度、声にしたから。</p></div><div className="story-list">{stories.map((story,index) => <article key={story.number} className={index===1?"offset":""}><small>{story.number}</small><h3>{story.title}</h3><p>{story.text}</p><strong>{story.result}</strong></article>)}</div></section>
     <section className="unfinished-section"><div className="unfinished-image"><img src="/assets/moriage-presenter-cutout-v1.png" alt="森上交流会 主催 森下秀樹" /></div><div className="unfinished-copy"><p className="story-label"><span>07</span> STILL ON THE WAY</p><h2>僕もまだ、<br /><em>夢の途中です。</em></h2><p>最初の僕は、「手伝ってください」と言っていました。一人で続けても、うまくいかなかった。</p><p>それでも、「もう裏切られてもいい。背中を預けます」と仲間に伝えたとき、何かが変わりました。</p><p>今は、「一緒につくろうぜ。俺はこれをやりたい」と言えます。完成した人が導く場所ではありません。僕も、あなたも、夢の途中にいる。だから一緒に進めるんだと思います。</p><div className="signature"><strong>森下 秀樹</strong><span>夢のジャングル / 森上交流会 主催</span></div></div></section>
+    <XTimeline />
     <section className="final-cta" id="official-line"><div className="final-cta-bg" aria-hidden="true" /><img src="/assets/logo-upward.png" alt="夢のジャングル 森上交流会" /><p className="story-label light"><span>08</span> YOUR STORY STARTS HERE</p><h2>次の主人公は、<br /><em>あなたです。</em></h2><p>うまく言葉にできなくても大丈夫。<br />そのままの想いを、持ってきてください。</p><a className="final-line-button" href="https://line.me/R/ti/p/@551qvzhy" target="_blank" rel="noreferrer"><b>LINE</b><span><small>開催情報・参加申し込み</small>公式LINEで次回開催を受け取る</span><i>↗</i></a></section>
     <footer className="story-footer"><img src="/assets/logo-upward.png" alt="" /><p>想いは言葉に。夢は挑戦に。挑戦は誰かの希望に。</p><small>© YUME NO JUNGLE / MORIAGE CONNECT</small></footer><a className="story-mobile-cta" href={LINE_TARGET}>公式LINEで参加する <span>↗</span></a>
   </main>;
