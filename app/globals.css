@@ -942,6 +942,16 @@ footer > small { grid-column: 2; grid-row: 1 / 3; font: 9px Arial, sans-serif; l
 .comic-strip article:nth-of-type(4) p:after{content:"会長、そしてえみ先生と出会い、『あなたは何者ですか？』と問われる。\A最後に出てきた答えは、『人の前に立って、何かを伝えたい』。\A12月、大阪で40〜50人から交流会をスタート。現在も『夢の途中』を歩いている。"}
 @media(max-width:760px){.comic-strip article{grid-template-columns:1fr;gap:9px;margin-left:18px;padding:27px 12px 27px 32px}.comic-strip article:first-of-type{margin-top:68px}.comic-strip article:first-of-type:before{left:-18px;top:-46px;white-space:normal;line-height:1.6}.comic-strip article:after{top:32px}.comic-strip article b:after{font-size:18px}.comic-strip article p:after{font-size:13px}}
 @media(max-width:760px){.why-section{padding-top:50px;padding-bottom:72px}.why-grid{margin-top:0;gap:30px}.why-body{padding-top:0}.comic-title{margin:46px 0 16px;font-size:27px}.comic-title strong{display:block;font-size:34px}.comic-strip{margin-top:0}}
+@media(max-width:760px){
+  .philosophy-section{padding-top:48px}
+  .experience-section{padding-top:58px}
+  .experience-cards{border-top:0;margin-top:34px}
+  .experience-cards article{position:relative;padding:26px 4px 30px 24px;border-left:2px solid rgba(212,155,29,.5);border-bottom:1px solid rgba(11,53,37,.16)}
+  .experience-cards article:before{content:"";position:absolute;left:-6px;top:31px;width:10px;height:10px;border-radius:50%;background:#d49b1d;box-shadow:0 0 0 5px #f5efd9}
+  .experience-cards span{display:none}
+  .experience-cards h3{margin:0 0 12px;font-size:20px}
+  .x-feed{padding-top:42px}
+}
 /* Japanese-only section presentation */
 .story-overline,.story-label,.story-movie .section-kicker,.movie-heading>p,.story-list article>small{display:none}
 .comic-strip article:first-of-type:before{content:"森下秀樹が『夢のジャングル』にたどり着くまで"}
@@ -965,7 +975,7 @@ footer > small { grid-column: 2; grid-row: 1 / 3; font: 9px Arial, sans-serif; l
 
 /* Final content corrections and a more compact reading rhythm */
 .comic-strip article:nth-of-type(2) small:after{content:"2024年6月"}
-.comic-strip article:nth-of-type(2) p:after{content:"コロナの影響で給与が下がり、『このままでいいのか』と考え始める。\A6月に会社を退職し、言葉を発しなくても交流できる『完全沈黙』という交流会を一人で始めた。"}
+.comic-strip article:nth-of-type(2) p:after{content:"コロナの影響で給与が下がり、『このままでいいのか』と考え始める。\A2024年6月に会社を退職し、言葉を発しなくても交流できる『完全沈黙』という交流会を一人で始めた。"}
 .comic-strip article:nth-of-type(4) small:after{content:"同年12月"}
 .comic-strip article:nth-of-type(4) p:after{content:"会長、そしてえみ先生と出会い、『あなたは何者ですか？』と問われる。\A最後に出てきた答えは、『人の前に立って、何かを伝えたい』。\A同年12月、大阪で40〜50人から交流会をスタート。現在も『夢の途中』を歩いている。"}
 .grandfather-section{display:none}
