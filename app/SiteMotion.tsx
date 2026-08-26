@@ -39,7 +39,7 @@ export default function SiteMotion() {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const revealTargets = Array.from(
       document.querySelectorAll<HTMLElement>(
-        ".section-kicker, .manifesto-grid > *, .section-head > *, .promise-grid article, .movie-heading > *, .movie-frame, .gallery figure, .gallery-copy, .audience > *, .schedule-heading, .schedule-card > div, .x-feed-heading > *, .x-timeline-frame, .section-cta, .line-cta > *:not(.cta-glow):not(.line-mark)"
+        ".story-label, .why-grid > *, .comic-strip, .why-photo, .question-section blockquote, .question-copy, .grandfather-grid > *, .philosophy-section > *, .experience-heading > *, .experience-cards article, .experience-photo, .movie-heading > *, .movie-frame, .stories-intro > *, .story-list article, .unfinished-section > *, .final-cta > *:not(.final-cta-bg)"
       )
     );
 
