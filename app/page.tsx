@@ -1,280 +1,30 @@
 import type { Metadata } from "next";
-import type { CSSProperties } from "react";
-import SiteMotion from "./SiteMotion";
-import XTimeline from "./XTimeline";
 
-export const metadata: Metadata = {
-  title: "夢のジャングル｜森上交流会",
-  description:
-    "想いを言葉に、夢を挑戦に。大人が本気で夢を語り、挑戦と応援とご縁が連鎖する体験型コネクトライブ。",
-};
-
+export const metadata: Metadata = { title: "夢のジャングル｜森上交流会", description: "想いを言葉にすることで、人と人生が動き出す。森下秀樹がつくる体験型コネクトライブ。" };
 const LINE_TARGET = "#official-line";
-
-function SectionCta({
-  eyebrow,
-  title,
-  light = false,
-}: {
-  eyebrow: string;
-  title: string;
-  light?: boolean;
-}) {
-  return (
-    <a className={`section-cta${light ? " light" : ""}`} href={LINE_TARGET}>
-      <span><small>{eyebrow}</small><strong>{title}</strong></span>
-      <img className="cta-arrow-img" src="/assets/cta-arrow-vines-v2.png" alt="" aria-hidden="true" />
-    </a>
-  );
-}
-
-const promises = [
-  {
-    number: "01",
-    title: "夢を、言葉にする",
-    text: "心の中にあった想いを言葉にした瞬間、夢は覚悟へ変わる。ここは、大人が本気で夢を語れる場所です。",
-  },
-  {
-    number: "02",
-    title: "必要な人と、出会う",
-    text: "ただ名刺を交換するのではなく、人と人を意図的につなぐ。本当に必要なご縁が、次の一歩を生み出します。",
-  },
-  {
-    number: "03",
-    title: "挑戦を、循環させる",
-    text: "誰かの挑戦を応援する。その勇気が、また新しい挑戦を生む。一人の主人公から未来が動き始めます。",
-  },
+const experiences = [
+  ["01", "夢を、言葉にする", "胸の内にあった想いを、肩書きや正解から離れて言葉にする。"],
+  ["02", "必要な人と、出会う", "名刺交換ではなく、想いを起点に人と人を意図的につなぐ。"],
+  ["03", "挑戦を、循環させる", "誰かの挑戦を応援する。その姿が、次の誰かの勇気になる。"],
+];
+const stories = [
+  { number: "STORY 01", title: "「好きな自分」を、隠さなくなった。", text: "普段は普通の服で参加していた女性。「ここは夢を語る場所だから、本当の自分で来たら？」という一言をきっかけに、次回は大好きなゴスロリ姿で参加しました。やがて発言も、やりたいことも、はっきりと変わっていきました。", result: "本当の自分を言葉と姿にした瞬間、人生の輪郭が変わり始めた。" },
+  { number: "STORY 02", title: "家を失った兄弟の想いが、人を動かした。", text: "火事で全焼した祖父の美容室を再建したい。兄弟が会場でその想いを語ると、応援の輪が一気に広がりました。", result: "クラウドファンディングは、イベント当日に目標を達成。" },
+  { number: "STORY 03", title: "想いが、仕事のご縁につながった。", text: "整体と医療を掛け合わせた店舗の挑戦を会場で伝えると、40人以上が無料施術チケットに並び、15〜20人が実際に来店しました。", result: "その後、1か月以内に6人が顧客へ。結果は、想いのあとからついてきた。" },
 ];
 
-const keywords = ["想い", "言葉", "夢", "挑戦", "応援", "ご縁", "希望"];
-
-function HiddenWords({ items }: { items: Array<{ word: string; number: string; top: string; left: string; tilt: string }> }) {
-  return (
-    <div className="section-secrets" aria-hidden="true">
-      {items.map((item) => (
-        <span
-          key={item.word}
-          className="hidden-word"
-          data-word={item.word}
-          style={{ "--secret-top": item.top, "--secret-left": item.left, "--secret-tilt": item.tilt } as CSSProperties}
-        >
-          <small>{item.number}</small>{item.word}
-        </span>
-      ))}
-    </div>
-  );
-}
-
 export default function Home() {
-  return (
-    <main>
-      <SiteMotion />
-      <header className="site-header">
-        <a className="mini-logo" href="#top" aria-label="夢のジャングル トップへ">
-          <img src="/assets/logo-upward.png" alt="夢のジャングル 森上交流会" />
-        </a>
-        <nav aria-label="メインナビゲーション">
-          <a href="#concept">理念</a>
-          <a href="#experience">体験</a>
-          <a href="#movie">映像</a>
-          <a className="header-cta" href={LINE_TARGET}><span>LINE</span>参加申し込み</a>
-        </nav>
-      </header>
-
-      <section className="hero" id="top">
-        <HiddenWords items={[
-          { word: "想い", number: "01", top: "27%", left: "82%", tilt: "-7deg" },
-          { word: "言葉", number: "02", top: "73%", left: "17%", tilt: "5deg" },
-        ]} />
-        <div className="hero-bg" aria-hidden="true" />
-        <div className="hero-shade" aria-hidden="true" />
-        <div className="hero-content">
-          <div className="eyebrow"><i /> TOKYO · OSAKA · NATIONWIDE</div>
-          <img className="hero-brand-logo" src="/assets/logo-upward.png" alt="夢のジャングル 森上交流会" />
-          <p className="hero-lead">
-            想いは言葉に。夢は挑戦に。<br />
-            挑戦は、誰かの希望に。
-          </p>
-          <div className="hero-actions">
-            <a className="primary-button" href={LINE_TARGET}>
-              <span>イベントへ申し込む</span>
-              <b>公式LINE</b>
-              <img className="arrow-img" src="/assets/cta-arrow-vines-v2.png" alt="" aria-hidden="true" />
-            </a>
-            <a className="text-link" href="#movie">PVを見る <span>↓</span></a>
-          </div>
-          <div className="hero-facts" aria-label="イベントの特徴">
-            <p><strong>REAL</strong><span>100人規模</span></p>
-            <p><strong>CONNECT</strong><span>体験型交流会</span></p>
-            <p><strong>ALL JAPAN</strong><span>東京・大阪から全国へ</span></p>
-          </div>
-        </div>
-        <p className="scroll-guide">SCROLL TO EXPLORE</p>
-      </section>
-
-      <section className="manifesto" id="concept">
-        <div className="section-kicker">01 / OUR PHILOSOPHY</div>
-        <div className="manifesto-grid">
-          <h2>想いは、<br /><em>言葉</em>にしなければ、<br />なかったことになる。</h2>
-          <div className="manifesto-copy">
-            <p className="lead-copy">だから私たちは、<br />大人が本気で夢を語れる場所を創ります。</p>
-            <p>
-              夢は、心の中で願うだけでは動きません。言葉にした瞬間、覚悟となり、仲間に伝わり、応援が生まれます。
-            </p>
-            <p>
-              夢のジャングルは、単なる交流会ではありません。人と人を意図的につなぎ、人生が変わるきっかけを創る場所です。
-            </p>
-          </div>
-        </div>
-        <div className="keyword-river" aria-label="理念を表す言葉">
-          <div className="keyword-track">
-            {[0, 1].map((group) => (
-              <div className="keyword-set" key={group} aria-hidden={group === 1}>
-                {keywords.map((word, index) => (
-                  <span key={`${group}-${word}`} className={index === 6 ? "final" : ""}>{word}</span>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
-        <SectionCta eyebrow="まずはお気軽に" title="無料セッションについて聞く" />
-      </section>
-
-      <section className="experience" id="experience">
-        <div className="section-head">
-          <div>
-            <div className="section-kicker">02 / THE EXPERIENCE</div>
-            <h2>交流では終わらない。<br /><span>人生が動き出す。</span></h2>
-          </div>
-          <p>偶然を待つのではなく、<br />きっかけを意図的に創る。</p>
-        </div>
-        <div className="promise-grid">
-          {promises.map((item) => (
-            <article key={item.number}>
-              <span className="promise-number">{item.number}</span>
-              <h3>{item.title}</h3>
-              <p>{item.text}</p>
-              <i aria-hidden="true" />
-            </article>
-          ))}
-        </div>
-        <SectionCta eyebrow="夢を動かす一歩" title="次回の交流会に申し込む" />
-      </section>
-
-      <section className="movie-section" id="movie">
-        <HiddenWords items={[
-          { word: "夢", number: "03", top: "24%", left: "86%", tilt: "-5deg" },
-          { word: "覚悟", number: "04", top: "76%", left: "11%", tilt: "6deg" },
-        ]} />
-        <div className="section-kicker light">03 / OFFICIAL FILM</div>
-        <div className="movie-heading">
-          <h2>言葉が、熱になる。<br />会場の空気を体感する。</h2>
-          <p>2 MIN 14 SEC · OFFICIAL PROMOTION FILM</p>
-        </div>
-        <div className="movie-frame">
-          <video controls playsInline preload="metadata" poster="/assets/group.jpg">
-            <source src="/assets/yume-jungle-pv.mp4" type="video/mp4" />
-          </video>
-          <span className="movie-label"><img src="/assets/logo-upward.png" alt="夢のジャングル 森上交流会" /></span>
-        </div>
-        <SectionCta eyebrow="映像の熱を、会場で" title="開催日程をLINEで受け取る" light />
-      </section>
-
-      <section className="gallery" aria-label="イベントの様子">
-        <figure className="gallery-tall">
-          <img src="/assets/moment-laugh.jpg" alt="笑顔で交流する参加者" />
-          <figcaption>夢を語る。</figcaption>
-        </figure>
-        <div className="gallery-copy">
-          <div className="section-kicker">04 / MOMENTS</div>
-          <h2>一人ひとりが、<em>主人公。</em></h2>
-          <p>
-            年齢も、肩書きも、歩んできた道も違う。だからこそ、ここで交わる言葉が新しい可能性をひらきます。
-          </p>
-        </div>
-        <figure className="gallery-wide">
-          <img src="/assets/moment-energy.jpg" alt="会場全体で盛り上がる参加者" />
-          <figcaption>挑戦を応援する。</figcaption>
-        </figure>
-        <figure className="gallery-small">
-          <img src="/assets/moment-connect.jpg" alt="多くの参加者が交流する会場" />
-          <figcaption>ご縁がつながる。</figcaption>
-        </figure>
-        <div className="gallery-cta">
-          <SectionCta eyebrow="あなたも、この輪の中へ" title="参加方法を公式LINEで確認" />
-        </div>
-      </section>
-
-      <section className="audience">
-        <div className="section-kicker">05 / WHO IT&apos;S FOR</div>
-        <h2>こんな想いを持つ、あなたへ。</h2>
-        <ul>
-          <li><span>01</span>本気の夢を、言葉にしてみたい</li>
-          <li><span>02</span>自分の可能性を広げるご縁に出会いたい</li>
-          <li><span>03</span>挑戦する仲間と、互いに応援し合いたい</li>
-          <li><span>04</span>人生を動かす、次の一歩を踏み出したい</li>
-        </ul>
-        <div className="audience-cta">
-          <SectionCta eyebrow="迷っている方も歓迎" title="まずは無料セッションから" />
-        </div>
-      </section>
-
-      <section className="schedule" aria-label="開催情報">
-        <HiddenWords items={[
-          { word: "主人公", number: "05", top: "19%", left: "82%", tilt: "-6deg" },
-          { word: "挑戦", number: "06", top: "80%", left: "12%", tilt: "5deg" },
-        ]} />
-        <div className="schedule-heading">
-          <div className="section-kicker light">06 / NEXT SESSION</div>
-          <h2>次の開催日時を、<br />公式LINEで先行案内。</h2>
-          <p>東京・大阪を中心に全国で開催。会場・日時・参加方法の最新情報を、公式LINEでお届けします。</p>
-        </div>
-        <div className="schedule-card">
-          <div><small>NEXT DATE</small><strong>次回開催日時</strong><span>公式LINEで先行公開</span></div>
-          <div><small>AREA</small><strong>東京・大阪</strong><span>全国へ順次展開</span></div>
-          <div><small>ENTRY</small><strong>参加申し込み</strong><span>公式LINEで受付</span></div>
-          <SectionCta eyebrow="日程確認・参加相談" title="公式LINEで無料セッションへ" light />
-        </div>
-      </section>
-
-      <XTimeline />
-
-      <section className="line-cta" id="official-line">
-        <HiddenWords items={[
-          { word: "希望", number: "09", top: "24%", left: "85%", tilt: "-5deg" },
-          { word: "行動", number: "10", top: "78%", left: "13%", tilt: "5deg" },
-        ]} />
-        <div className="cta-glow" aria-hidden="true" />
-        <div className="line-mark" aria-hidden="true">LINE</div>
-        <img
-          className="cta-logo-image"
-          src="/assets/logo-upward.png"
-          alt="夢のジャングル 森上交流会"
-        />
-        <div className="section-kicker light">JOIN THE NEXT EXPERIENCE</div>
-        <h2>次の主人公は、<br /><em>あなたです。</em></h2>
-        <p>
-          開催情報・会場・お申し込みについては、<br className="desktop-only" />公式LINEからご案内します。
-        </p>
-        <a className="line-search" href="https://line.me/" target="_blank" rel="noreferrer" aria-label="LINEを開いて森上交流会を検索">
-          <span className="line-bubble">LINE</span>
-          <span className="search-copy"><small>公式LINEから参加申し込み</small><strong>森上交流会をLINEで検索</strong></span>
-          <span className="search-submit">LINEを開く <img className="search-arrow-img" src="/assets/cta-arrow-vines-v2.png" alt="" aria-hidden="true" /></span>
-        </a>
-        <small className="cta-note">※公式LINEの専用URLは公開時に設定できます</small>
-      </section>
-
-      <footer>
-        <div className="footer-logo"><span>YUME NO JUNGLE</span><small>夢のジャングル / 森上交流会</small></div>
-        <p>想いは言葉に。夢は挑戦に。挑戦は誰かの希望に。</p>
-        <small>© YUME NO JUNGLE / MORIAGE CONNECT</small>
-      </footer>
-
-      <a className="mobile-line-bar" href={LINE_TARGET}>
-        <span className="mobile-line-icon">LINE</span>
-        <span className="mobile-line-copy"><small>イベント参加申し込み</small><strong>公式LINEで申し込む</strong></span>
-        <img className="mobile-line-arrow" src="/assets/cta-arrow-vines-v2.png" alt="" aria-hidden="true" />
-      </a>
-    </main>
-  );
+  return <main className="story-site">
+    <header className="story-header"><a href="#top" className="story-logo"><img src="/assets/logo-upward.png" alt="夢のジャングル 森上交流会" /></a><nav aria-label="メインナビゲーション"><a href="#why">はじまり</a><a href="#philosophy">理念</a><a href="#stories">参加者の物語</a><a className="story-header-cta" href={LINE_TARGET}>次回開催を知る</a></nav></header>
+    <section className="story-hero" id="top"><div className="story-hero-image" aria-hidden="true" /><div className="story-hero-shade" aria-hidden="true" /><div className="story-hero-inner"><p className="story-overline">YUME NO JUNGLE / MORIAGE CONNECT</p><img className="story-hero-logo" src="/assets/logo-upward.png" alt="夢のジャングル 森上交流会" /><h1>想いは言葉に。<br />夢は挑戦に。<br /><em>挑戦は、誰かの希望に。</em></h1><p className="story-hero-copy">大人が、本当の想いを語れる場所。<br />ここから、人と人生が動き出す。</p><div className="story-hero-actions"><a className="story-primary" href={LINE_TARGET}>次回の交流会に参加する <span>↗</span></a><a className="story-scroll" href="#why">この場所が生まれた理由 <span>↓</span></a></div></div><div className="story-hero-note"><span>100人規模</span><span>東京・大阪から全国へ</span><span>体験型コネクトライブ</span></div></section>
+    <section className="why-section" id="why"><div className="story-label"><span>01</span> WHY THIS PLACE EXISTS</div><div className="why-grid"><div className="why-heading"><p>夢を語れる場所をつくろうと思ったのは、</p><h2>僕自身が、<br />自分の想いを<br /><em>言葉にできなかった</em>からです。</h2></div><div className="why-body"><p className="why-lead">47歳まで、僕は会社員でした。</p><p>コロナで給与が下がり、「このままでいいのか」と初めて立ち止まりました。『ゆるキャン△』をきっかけに山を買い、キャンプ場をつくろうと動いたこともあります。</p><p>うまくいかなかったこと。お金をきっかけに、信じていた人との関係が変わったこと。人と関わることが怖くなった時期もありました。</p><p>それでも、会長やえみ先生との出会いが、僕をもう一度、人のいる場所へ連れ戻してくれました。</p></div></div><div className="comic-strip" aria-label="森下秀樹の原体験"><article><small>SCENE 01</small><b>会社員</b><p>47歳まで、決められた役割の中で働いていた。</p></article><article><small>SCENE 02</small><b>山を買う</b><p>「このままでいいのか」<br />初めて、自分の夢へ動いた。</p></article><article><small>SCENE 03</small><b>人を信じる怖さ</b><p>お金と人間関係。<br />うまくいかない現実に傷ついた。</p></article><article className="comic-accent"><small>SCENE 04</small><b>問いに出会う</b><p>「あなたは、何者ですか？」</p></article></div><div className="why-photo"><img src="/assets/moment-connect.jpg" alt="想いを語り合う会場の参加者" /><p>うまく話せなくてもいい。<br />まだ夢と呼べなくてもいい。<br /><strong>まず、本当の声を置ける場所を。</strong></p></div></section>
+    <section className="question-section"><div className="question-vines" aria-hidden="true" /><p className="story-label light"><span>02</span> THE QUESTION</p><blockquote><p>「あなたは、<br /><em>何者ですか？」</em></p></blockquote><div className="question-copy"><p>会社員です。こんな仕事をしています。<br />肩書きを答えるたび、「違うよ」と言われました。</p><p>何度も自分の内側に問いかけて、最後に出てきたのは、</p><strong>「人の前に立って、何かを伝えたい。」</strong><p>それが、肩書きの奥にいた僕でした。</p></div><p className="question-to-you">では、あなたは何者ですか。</p></section>
+    <section className="grandfather-section"><div className="story-label"><span>03</span> THE ORIGIN</div><div className="grandfather-grid"><div className="grandfather-visual"><span>200+</span><small>PEOPLE CAME TO SAY GOODBYE</small></div><div><p className="section-small-title">祖父の葬儀で、気づいたこと。</p><h2>「俺、じいちゃんのこと<br /><em>何も知らへんやん。</em>」</h2><p>戦争を経験した祖父の葬儀には、200人を超える人が訪れました。多くの人の中に祖父の記憶が残っている。それなのに、孫の僕は、祖父が何を感じ、何を大切に生きたのかを知らなかった。</p><p>人は、誰かに想いを語られることで、その人の中で生き続ける。逆に、言葉にされなかった想いは、なかったことになってしまうのかもしれない。</p></div></div></section>
+    <section className="philosophy-section" id="philosophy"><p className="story-label light"><span>04</span> OUR PHILOSOPHY</p><h2>想いは、<br /><em>言葉にしなければ、</em><br />なかったことになる。</h2><p>だから僕たちは、想いを言葉にしてくれる人と、<br />その想いを本気で語れる場所をつくります。</p><div className="word-river" aria-hidden="true">想い　言葉　夢　挑戦　応援　ご縁　希望</div></section>
+    <section className="experience-section" id="experience"><div className="experience-heading"><div><p className="story-label"><span>05</span> HOW IT WORKS</p><h2>交流では終わらない。<br /><em>人生が動き出す。</em></h2></div><p>名刺の数ではなく、<br />心が動いた瞬間を持ち帰る。</p></div><div className="experience-cards">{experiences.map(([number,title,text]) => <article key={number}><span>{number}</span><h3>{title}</h3><p>{text}</p></article>)}</div><div className="experience-photo"><img src="/assets/moment-energy.jpg" alt="会場全体で挑戦を応援する参加者" /><p>一人の言葉が、<br />会場全体の熱になる。</p></div></section>
+    <section className="stories-section" id="stories"><div className="stories-intro"><p className="story-label light"><span>06</span> STORIES OF CHANGE</p><h2>想いを口にした人から、<br />景色が変わっていった。</h2><p>何かを教えられたからではない。<br />本当の想いを、一度、声にしたから。</p></div><div className="story-list">{stories.map((story,index) => <article key={story.number} className={index===1?"offset":""}><small>{story.number}</small><h3>{story.title}</h3><p>{story.text}</p><strong>{story.result}</strong></article>)}</div></section>
+    <section className="unfinished-section"><div className="unfinished-image"><img src="/assets/moriage-presenter-cutout-v1.png" alt="森上交流会 主催 森下秀樹" /></div><div className="unfinished-copy"><p className="story-label"><span>07</span> STILL ON THE WAY</p><h2>僕もまだ、<br /><em>夢の途中です。</em></h2><p>最初の僕は、「手伝ってください」と言っていました。一人で続けても、うまくいかなかった。</p><p>それでも、「もう裏切られてもいい。背中を預けます」と仲間に伝えたとき、何かが変わりました。</p><p>今は、「一緒につくろうぜ。俺はこれをやりたい」と言えます。完成した人が導く場所ではありません。僕も、あなたも、夢の途中にいる。だから一緒に進めるんだと思います。</p><div className="signature"><strong>森下 秀樹</strong><span>夢のジャングル / 森上交流会 主催</span></div></div></section>
+    <section className="final-cta" id="official-line"><div className="final-cta-bg" aria-hidden="true" /><img src="/assets/logo-upward.png" alt="夢のジャングル 森上交流会" /><p className="story-label light"><span>08</span> YOUR STORY STARTS HERE</p><h2>次の主人公は、<br /><em>あなたです。</em></h2><p>うまく言葉にできなくても大丈夫。<br />そのままの想いを、持ってきてください。</p><a className="final-line-button" href="https://line.me/" target="_blank" rel="noreferrer"><b>LINE</b><span><small>開催情報・参加申し込み</small>公式LINEで次回開催を受け取る</span><i>↗</i></a><small className="final-note">※公式LINEの専用URLは公開時に設定できます</small></section>
+    <footer className="story-footer"><img src="/assets/logo-upward.png" alt="" /><p>想いは言葉に。夢は挑戦に。挑戦は誰かの希望に。</p><small>© YUME NO JUNGLE / MORIAGE CONNECT</small></footer><a className="story-mobile-cta" href={LINE_TARGET}>公式LINEで参加する <span>↗</span></a>
+  </main>;
 }
