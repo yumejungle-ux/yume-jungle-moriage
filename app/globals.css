@@ -943,3 +943,18 @@ footer > small { grid-column: 2; grid-row: 1 / 3; font: 9px Arial, sans-serif; l
 .comic-strip article:first-of-type:before{content:"森下秀樹が『夢のジャングル』にたどり着くまで"}
 .grandfather-visual small{font-size:0}
 .grandfather-visual small:after{content:"人以上が参列";font:800 11px Arial,sans-serif;letter-spacing:.12em}
+
+/* Participant stories: illustrated before / after moments */
+.story-list article{overflow:hidden}
+.story-list article:before{content:"";display:block;width:calc(100% + 80px);aspect-ratio:16/9;margin:-40px -40px 32px;background-position:center;background-size:cover;border-bottom:2px solid rgba(11,53,37,.22)}
+.story-list article:nth-child(1):before{background-image:url('/assets/story-before-after-self-v1.png')}
+.story-list article:nth-child(2):before{background-image:url('/assets/story-before-after-brothers-v1.png')}
+.story-list article:nth-child(3):before{background-image:url('/assets/story-before-after-clinic-v1.png')}
+
+/* The story belongs in the copy; remove the oversized 200+ display panel. */
+.grandfather-grid{grid-template-columns:1fr;max-width:850px}
+.grandfather-visual{display:none}
+
+@media(max-width:760px){
+  .story-list article:before{width:calc(100% + 48px);margin:-24px -24px 24px}
+}
