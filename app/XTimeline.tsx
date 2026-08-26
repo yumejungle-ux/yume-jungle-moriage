@@ -20,12 +20,16 @@ export default function XTimeline() {
 
   useEffect(() => {
     let cancelled = false;
+    let loadRetry: number | undefined;
     const revealWhenRendered = () => {
       if (cancelled || !timelineRef.current) return;
       const rendered = timelineRef.current.querySelector(
         ".twitter-timeline-rendered, iframe"
       );
-      if (rendered) setTimelineLoaded(true);
+      if (rendered) {
+        setTimelineLoaded(true);
+        if (loadRetry) window.clearInterval(loadRetry);
+      }
     };
     const loadTimeline = () => {
       if (timelineRef.current && window.twttr?.widgets) {
@@ -34,6 +38,10 @@ export default function XTimeline() {
         window.setTimeout(revealWhenRendered, 1400);
       }
     };
+    const observer = new MutationObserver(revealWhenRendered);
+    if (timelineRef.current) {
+      observer.observe(timelineRef.current, { childList: true, subtree: true });
+    }
     const existingScript = document.querySelector<HTMLScriptElement>(
       'script[src="https://platform.twitter.com/widgets.js"]'
     );
@@ -47,10 +55,16 @@ export default function XTimeline() {
     }
     if (window.twttr?.widgets) loadTimeline();
     script.addEventListener("load", loadTimeline);
+    loadRetry = window.setInterval(() => {
+      if (window.twttr?.widgets) loadTimeline();
+      revealWhenRendered();
+    }, 1200);
     const slowTimer = window.setTimeout(() => setTimelineSlow(true), 4500);
     return () => {
       cancelled = true;
       window.clearTimeout(slowTimer);
+      if (loadRetry) window.clearInterval(loadRetry);
+      observer.disconnect();
       script?.removeEventListener("load", loadTimeline);
     };
   }, []);

@@ -633,6 +633,7 @@ main { position: relative; isolation: isolate; overflow: clip; }
 .x-timeline-frame > * { position: relative; z-index: 1; }
 .x-timeline-label { position: absolute; z-index: 2; left: 22px; top: 10px; color: rgba(244,197,66,.8); font: 800 7px Arial,sans-serif; letter-spacing: .2em; }
 .x-timeline-frame .twitter-timeline { display: block; width: 100%; min-height: 438px; color: transparent; opacity: 0; transition: opacity .55s ease; }
+.x-timeline-frame .twitter-timeline-rendered{display:block!important}
 .x-timeline-frame.is-loaded .twitter-timeline, .x-timeline-frame.is-loaded .twitter-timeline-rendered { opacity: 1; }
 .x-timeline-frame .twitter-timeline-rendered { width: 100% !important; max-height: 438px !important; overflow: auto !important; border-radius: 15px; opacity: 0; transition: opacity .55s ease; }
 .x-timeline-frame .twitter-timeline-rendered iframe { width: 100% !important; min-width: 100% !important; height: 438px !important; min-height: 438px !important; }
