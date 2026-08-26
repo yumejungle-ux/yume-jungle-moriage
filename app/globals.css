@@ -879,6 +879,8 @@ footer > small { grid-column: 2; grid-row: 1 / 3; font: 9px Arial, sans-serif; l
 }
 /* Comic-panel treatment for the origin story */
 .comic-art{grid-column:1/-1;width:100%;border:3px solid #0b3525;box-shadow:8px 8px 0 #0b3525;background:#fffaf0}
+.comic-title{max-width:1240px;margin:68px auto 22px;font-size:clamp(25px,2.6vw,38px);line-height:1.45;letter-spacing:.04em;color:#0b3525}
+.comic-title strong{color:#d49b1d;font-weight:inherit}
 .comic-strip article{min-height:112px;padding:20px 20px 17px;box-shadow:4px 4px 0 #0b3525;justify-content:space-between}
 .comic-strip article:nth-child(even){transform:none}
 .comic-strip article b{margin:18px 0 0;font-size:21px}
@@ -939,6 +941,7 @@ footer > small { grid-column: 2; grid-row: 1 / 3; font: 9px Arial, sans-serif; l
 .comic-strip article:nth-of-type(4) b:after{content:"人との出会いから、夢を語る場所へ"}
 .comic-strip article:nth-of-type(4) p:after{content:"会長、そしてえみ先生と出会い、『あなたは何者ですか？』と問われる。\A最後に出てきた答えは、『人の前に立って、何かを伝えたい』。\A12月、大阪で40〜50人から交流会をスタート。現在も『夢の途中』を歩いている。"}
 @media(max-width:760px){.comic-strip article{grid-template-columns:1fr;gap:9px;margin-left:18px;padding:27px 12px 27px 32px}.comic-strip article:first-of-type{margin-top:68px}.comic-strip article:first-of-type:before{left:-18px;top:-46px;white-space:normal;line-height:1.6}.comic-strip article:after{top:32px}.comic-strip article b:after{font-size:18px}.comic-strip article p:after{font-size:13px}}
+@media(max-width:760px){.why-section{padding-top:50px;padding-bottom:72px}.why-grid{margin-top:0;gap:30px}.why-body{padding-top:0}.comic-title{margin:46px 0 16px;font-size:27px}.comic-title strong{display:block;font-size:34px}.comic-strip{margin-top:0}}
 /* Japanese-only section presentation */
 .story-overline,.story-label,.story-movie .section-kicker,.movie-heading>p,.story-list article>small{display:none}
 .comic-strip article:first-of-type:before{content:"森下秀樹が『夢のジャングル』にたどり着くまで"}
