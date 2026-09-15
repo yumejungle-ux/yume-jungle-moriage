@@ -27,7 +27,7 @@ export default function XTimeline() {
         </span>
         <span className="x-post-copy">夢は、口に出した瞬間から動き出す。<br /><br />うまく話せなくても大丈夫。<br />今日もワクワクの冒険に<br />行ってらっしゃい😆🌴</span>
         <img className="x-post-illustration" src="/assets/morimori-x-post-illustration-v1.png" alt="ジャングルの会場で参加者に夢を語りかけるもりもりのイラスト" />
-        <span className="x-post-foot"><small>投稿イメージ</small><strong>公式Xを見に行く <i aria-hidden="true">↗</i></strong></span>
+        <span className="x-post-foot"><small>投稿イメージ</small><strong>公式Xで最新の開催情報を見る <i aria-hidden="true">↗</i></strong></span>
       </a>
     </section>
   );
