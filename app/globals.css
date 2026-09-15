@@ -1276,16 +1276,16 @@ footer > small { grid-column: 2; grid-row: 1 / 3; font: 9px Arial, sans-serif; l
   padding:clamp(42px,5.5vw,72px) max(7vw,28px);
   display:grid;
   grid-template-columns:minmax(0,1.2fr) minmax(330px,.8fr);
-  grid-template-areas:"copy action" "copy note";
+  grid-template-areas:"copy actions";
   align-items:center;
   gap:10px clamp(44px,7vw,100px);
   border-block:1px solid rgba(11,53,37,.16);
 }
-.context-cta>div{grid-area:copy;max-width:700px}
-.context-cta>div>small{display:block;margin-bottom:12px;font:800 11px Arial,"Noto Sans JP",sans-serif;letter-spacing:.13em}
-.context-cta>div>strong{display:block;font-size:clamp(24px,2.6vw,38px);line-height:1.55;letter-spacing:.025em}
-.context-cta>a{
-  grid-area:action;
+.context-cta>div:first-child{grid-area:copy;max-width:700px}
+.context-cta>div:first-child>small{display:block;margin-bottom:12px;font:800 11px Arial,"Noto Sans JP",sans-serif;letter-spacing:.13em}
+.context-cta>div:first-child>strong{display:block;font-size:clamp(24px,2.6vw,38px);line-height:1.55;letter-spacing:.025em}
+.context-cta-actions{grid-area:actions;display:grid;gap:10px;max-width:none!important}
+.context-cta-actions>a{
   min-height:72px;
   padding:18px 22px;
   display:flex;
@@ -1297,32 +1297,39 @@ footer > small { grid-column: 2; grid-row: 1 / 3; font: 9px Arial, sans-serif; l
   line-height:1.55;
   box-shadow:0 16px 38px rgba(0,0,0,.16);
 }
-.context-cta>a span{font-size:21px}
-.context-cta>p{grid-area:note;margin:6px 0 0;font-size:14px;line-height:1.65}
+.context-cta-actions>a>span:last-child{font-size:21px}
+.context-cta-actions>p{margin:2px 0 0;font-size:13px;line-height:1.65}
+.context-line-direct{display:grid!important;grid-template-columns:48px minmax(0,1fr) 22px;align-items:center!important;gap:14px!important;min-height:88px!important}
+.context-line-direct>b{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:#34c967;color:#fff;font:900 9px Arial,sans-serif;box-shadow:0 5px 15px rgba(2,73,32,.22)}
+.context-line-direct>span{display:grid;font-size:15px;line-height:1.5}
+.context-line-direct>span>small{font-size:10px;font-weight:700;letter-spacing:.04em;opacity:.68}
+.context-line-direct>i{font-size:22px;font-style:normal}
+.context-cta-conversion .context-next{min-height:48px;padding:10px 4px;background:transparent!important;border:0!important;border-bottom:1px solid currentColor!important;box-shadow:none!important;font-size:13px;animation:none!important}
+.context-cta-conversion .context-next::after{display:none}
 .context-cta-cream{background:#efe5c7;color:#0b3525}
-.context-cta-cream>div>small{color:#9b7012}
-.context-cta-cream>a{background:#0b3525;color:#fff}
-.context-cta-cream>p{color:#52675a}
+.context-cta-cream>div:first-child>small{color:#9b7012}
+.context-cta-cream .context-next{background:#0b3525;color:#fff}
+.context-cta-cream .context-cta-actions>p{color:#52675a}
 .context-cta-dark{background:#f0c53e;color:#082f20}
-.context-cta-dark>div>small{color:#315744}
-.context-cta-dark>a{background:#052c1d;color:#fff}
-.context-cta-dark>p{color:#405a4c}
+.context-cta-dark>div:first-child>small{color:#315744}
+.context-cta-dark .context-next{color:#143c2d}
+.context-cta-dark .context-cta-actions>p{color:#405a4c}
 .context-cta-green{background:#0c482f;color:#fff;border-color:rgba(244,197,66,.34)}
-.context-cta-green>div>small{color:#f0c53e}
-.context-cta-green>a{background:#f0c53e;color:#0b3525}
-.context-cta-green>p{color:rgba(255,255,255,.68)}
+.context-cta-green>div:first-child>small{color:#f0c53e}
+.context-cta-green .context-next{color:#fff}
+.context-cta-green .context-cta-actions>p{color:rgba(255,255,255,.68)}
 
 @media(max-width:760px){
   .context-cta{
     padding:38px 20px 42px;
     grid-template-columns:1fr;
-    grid-template-areas:"copy" "action" "note";
+    grid-template-areas:"copy" "actions";
     gap:22px;
   }
-  .context-cta>div>small{margin-bottom:9px;font-size:10px;line-height:1.6}
-  .context-cta>div>strong{font-size:23px;line-height:1.55}
-  .context-cta>a{min-height:68px;padding:16px 18px;font-size:15px}
-  .context-cta>p{margin-top:-10px;font-size:13px}
+  .context-cta>div:first-child>small{margin-bottom:9px;font-size:10px;line-height:1.6}
+  .context-cta>div:first-child>strong{font-size:23px;line-height:1.55}
+  .context-cta-actions>a{min-height:68px;padding:16px 18px;font-size:15px}
+  .context-cta-actions>p{font-size:12px}
   .story-header-cta{max-width:190px;text-align:center;line-height:1.45}
 }
 
@@ -1331,7 +1338,8 @@ footer > small { grid-column: 2; grid-row: 1 / 3; font: 9px Arial, sans-serif; l
 .story-primary,
 .story-mobile-cta,
 .final-line-button,
-.context-cta>a{
+.context-line-direct,
+.context-cta:not(.context-cta-conversion) .context-next{
   position:relative;
   overflow:hidden;
   border:1px solid rgba(255,235,166,.9);
@@ -1344,7 +1352,8 @@ footer > small { grid-column: 2; grid-row: 1 / 3; font: 9px Arial, sans-serif; l
 .story-primary::after,
 .story-mobile-cta::after,
 .final-line-button::after,
-.context-cta>a::after{
+.context-line-direct::after,
+.context-cta:not(.context-cta-conversion) .context-next::after{
   content:"";
   position:absolute;
   inset:-70% auto -70% -42%;
@@ -1356,16 +1365,18 @@ footer > small { grid-column: 2; grid-row: 1 / 3; font: 9px Arial, sans-serif; l
 .story-header-cta,
 .story-primary,
 .story-mobile-cta,
-.final-line-button{
+.final-line-button,
+.context-line-direct{
   animation:ctaGoldPulse 2.8s ease-in-out infinite;
 }
 .story-header-cta::after,
 .story-primary::after,
 .story-mobile-cta::after,
-.final-line-button::after{
+.final-line-button::after,
+.context-line-direct::after{
   animation:ctaGoldSweep 3.5s ease-in-out infinite;
 }
-.context-cta>a:hover{box-shadow:0 18px 42px rgba(91,57,0,.32),0 0 30px rgba(246,200,73,.34),inset 0 1px 0 rgba(255,255,255,.8)}
+.context-line-direct:hover,.context-cta:not(.context-cta-conversion) .context-next:hover{box-shadow:0 18px 42px rgba(91,57,0,.32),0 0 30px rgba(246,200,73,.34),inset 0 1px 0 rgba(255,255,255,.8)}
 .final-line-button b{background:#35c968;color:#fff;box-shadow:0 6px 16px rgba(4,76,34,.22)}
 
 @keyframes ctaGoldPulse{
@@ -1378,6 +1389,66 @@ footer > small { grid-column: 2; grid-row: 1 / 3; font: 9px Arial, sans-serif; l
   86%,100%{left:122%;opacity:0}
 }
 @media(prefers-reduced-motion:reduce){
-  .story-header-cta,.story-primary,.story-mobile-cta,.final-line-button,
-  .story-header-cta::after,.story-primary::after,.story-mobile-cta::after,.final-line-button::after{animation:none}
+  .story-header-cta,.story-primary,.story-mobile-cta,.final-line-button,.context-line-direct,
+  .story-header-cta::after,.story-primary::after,.story-mobile-cta::after,.final-line-button::after,.context-line-direct::after{animation:none}
+}
+
+/* Header: keep the narrative path and the conversion path visible together. */
+.story-logo{display:grid;gap:1px}
+.story-logo>small{color:rgba(255,255,255,.72);font:700 8px Arial,"Noto Sans JP",sans-serif;letter-spacing:.06em;white-space:nowrap}
+.story-header nav{gap:18px}
+.story-header-guide{display:grid;padding:7px 13px;border-left:1px solid rgba(255,255,255,.24);line-height:1.25}
+.story-header-guide small,.story-header-cta small{font-size:8px;letter-spacing:.08em;opacity:.66}
+.story-header-guide strong,.story-header-cta strong{font-size:11px;letter-spacing:.035em}
+.story-header-cta{min-width:178px;display:grid;grid-template-columns:minmax(0,1fr) 15px;align-items:center;text-align:left;line-height:1.25}
+.story-header-cta small,.story-header-cta strong{grid-column:1}
+.story-header-cta span{grid-column:2;grid-row:1/3;font-size:16px}
+.story-mobile-cta{align-items:center}
+.story-mobile-cta>span{display:grid;line-height:1.35}
+.story-mobile-cta>span>small{font-size:9px;letter-spacing:.06em;opacity:.66}
+.story-mobile-cta>i{font-size:20px;font-style:normal}
+
+@media(max-width:760px){
+  .story-logo>small{display:none}
+  .story-header nav{gap:0}
+  .story-header-cta{min-width:166px;max-width:174px;padding:8px 11px;text-align:left}
+  .story-header-cta strong{font-size:10px}
+  .story-mobile-cta{position:fixed;z-index:70;left:12px;right:12px;bottom:10px;width:auto;padding-block:12px;min-height:62px}
+}
+
+/* Manga chapter divider */
+.comic-title{
+  position:relative;
+  max-width:1200px;
+  margin:76px auto 28px;
+  padding:30px 38px 32px;
+  border:1px solid rgba(240,197,62,.72);
+  background:linear-gradient(118deg,#062b1d 0%,#0b452e 68%,#123d2b 100%);
+  color:#fff;
+  box-shadow:0 18px 42px rgba(5,42,28,.24),7px 7px 0 #d4a52b,inset 0 1px rgba(255,255,255,.08);
+}
+.comic-title::before{
+  content:"MANGA STORY  /  01";
+  display:block;
+  margin-bottom:9px;
+  color:#f0c53e;
+  font:900 10px Arial,sans-serif;
+  letter-spacing:.18em;
+}
+.comic-title::after{
+  content:"→";
+  position:absolute;
+  right:34px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#f0c53e;
+  font:300 32px Arial,sans-serif;
+}
+.comic-title strong{color:#f4cf59}
+
+@media(max-width:760px){
+  .comic-title{margin:48px 0 24px;padding:23px 25px 25px;font-size:23px;box-shadow:0 14px 30px rgba(5,42,28,.23),5px 5px 0 #d4a52b}
+  .comic-title::before{font-size:9px}
+  .comic-title::after{right:20px;font-size:25px}
+  .comic-title strong{display:block;margin-top:2px;padding-right:34px;font-size:31px}
 }
