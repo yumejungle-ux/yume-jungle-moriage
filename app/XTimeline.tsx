@@ -1,7 +1,6 @@
 import type { CSSProperties } from "react";
 
 const X_PROFILE_URL = "https://x.com/momongadamon333";
-const X_TIMELINE_URL = "https://syndication.twitter.com/srv/timeline-profile/screen-name/momongadamon333?dnt=true&theme=dark&lang=ja";
 
 export default function XTimeline() {
   return (
@@ -12,19 +11,24 @@ export default function XTimeline() {
       </div>
       <div className="x-feed-heading">
         <div className="section-kicker light">07 / EVENT STORIES</div>
-        <h2 id="x-feed-title">参加する前に、<br /><span>会場の今を見る。</span></h2>
-        <p>開催の様子や最新のお知らせを、公式Xの投稿からご覧いただけます。</p>
+        <h2 id="x-feed-title">公式Xで、<br /><span>会場の今を見る。</span></h2>
+        <p>開催の様子や最新のお知らせは、もりもりの公式Xで発信しています。</p>
         <div className="x-author-card">
           <span className="x-author-portrait" aria-hidden="true"><img src="/assets/moriage-presenter-cutout-v1.png" alt="" /></span>
           <span className="x-author-copy"><small>FROM MORIAGE / OFFICIAL X</small><strong>もりもりの今日の発信</strong><span>@momongadamon333</span></span>
         </div>
         <small className="x-feed-note">参加方法・開催日程の確認は、この下の公式LINEから。</small>
       </div>
-      <div className="x-timeline-frame">
-        <span className="x-timeline-label">LIVE / MORIAGE CONNECT</span>
-        <iframe className="x-timeline-iframe" src={X_TIMELINE_URL} title="もりもりのX最新投稿" loading="lazy" referrerPolicy="no-referrer" />
-        <a className="x-timeline-direct" href={X_PROFILE_URL} target="_blank" rel="noreferrer">タイムラインが表示されない場合はXで開く <span aria-hidden="true">↗</span></a>
-      </div>
+      <a className="x-post-card" href={X_PROFILE_URL} target="_blank" rel="noreferrer" aria-label="もりもりの公式Xを開く">
+        <span className="x-post-head">
+          <span className="x-post-avatar"><img src="/assets/moriage-presenter-cutout-v1.png" alt="" /></span>
+          <span className="x-post-user"><strong>もりもり｜カリスマ夢を現実にする側の人間</strong><small>@momongadamon333</small></span>
+          <b aria-hidden="true">X</b>
+        </span>
+        <span className="x-post-copy">夢は、口に出した瞬間から動き出す。<br /><br />うまく話せなくても大丈夫。<br />今日もワクワクの冒険に<br />行ってらっしゃい😆🌴</span>
+        <img className="x-post-illustration" src="/assets/morimori-x-post-illustration-v1.png" alt="ジャングルの会場で参加者に夢を語りかけるもりもりのイラスト" />
+        <span className="x-post-foot"><small>投稿イメージ</small><strong>公式Xを見に行く <i aria-hidden="true">↗</i></strong></span>
+      </a>
     </section>
   );
 }
