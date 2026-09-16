@@ -897,7 +897,7 @@ footer > small { grid-column: 2; grid-row: 1 / 3; font: 9px Arial, sans-serif; l
 .comic-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .comic-strip .comic-art{grid-column:1/-1}
 .comic-strip article{display:flex;min-height:132px;margin-top:48px;padding:22px 20px;border:1px solid rgba(11,53,37,.24);box-shadow:none;background:#fffaf0;transform:none!important;justify-content:flex-start}
-.comic-strip article:first-of-type:before{content:"STORY TIMELINE  /  森下秀樹の歩み";position:absolute;left:0;top:-34px;color:#6e7e73;font:800 9px Arial,sans-serif;letter-spacing:.16em;white-space:nowrap}
+.comic-strip article:first-of-type:before{content:"STORY TIMELINE  /  もりもりの歩み";position:absolute;left:0;top:-34px;color:#6e7e73;font:800 9px Arial,sans-serif;letter-spacing:.16em;white-space:nowrap}
 .comic-strip article small{font-size:0;color:#a37413}
 .comic-strip article small:after{font:900 11px Arial,sans-serif;letter-spacing:.08em}
 .comic-strip article:nth-of-type(1) small:after{content:"〜2024年6月"}
@@ -926,7 +926,7 @@ footer > small { grid-column: 2; grid-row: 1 / 3; font: 9px Arial, sans-serif; l
 .comic-strip{display:block}
 .comic-strip article{position:relative;display:grid;grid-template-columns:160px 1fr;gap:38px;min-height:0;margin:0 0 0 42px;padding:34px 34px 34px 58px;border:0;border-left:2px solid rgba(11,53,37,.24);background:transparent;box-shadow:none}
 .comic-strip article:first-of-type{margin-top:78px}
-.comic-strip article:first-of-type:before{content:"HISTORY  /  森下秀樹が『夢のジャングル』にたどり着くまで";left:-42px;top:-50px;color:#51665a;font:800 10px Arial,sans-serif;letter-spacing:.15em}
+.comic-strip article:first-of-type:before{content:"HISTORY  /  もりもりが『夢のジャングル』にたどり着くまで";left:-42px;top:-50px;color:#51665a;font:800 10px Arial,sans-serif;letter-spacing:.15em}
 .comic-strip article:after{content:"";position:absolute;left:-8px;top:41px;width:14px;height:14px;border:3px solid #f5efd9;border-radius:50%;background:#d49b1d;box-shadow:0 0 0 1px #0b3525}
 .comic-strip article small{align-self:start;padding-top:3px}
 .comic-strip article small:after{font:900 14px Arial,sans-serif;color:#a07112}
@@ -960,7 +960,7 @@ footer > small { grid-column: 2; grid-row: 1 / 3; font: 9px Arial, sans-serif; l
 }
 /* Japanese-only section presentation */
 .story-overline,.story-label,.story-movie .section-kicker,.movie-heading>p,.story-list article>small{display:none}
-.comic-strip article:first-of-type:before{content:"森下秀樹が『夢のジャングル』にたどり着くまで"}
+.comic-strip article:first-of-type:before{content:"もりもりが『夢のジャングル』にたどり着くまで"}
 .grandfather-visual small{font-size:0}
 .grandfather-visual small:after{content:"人以上が参列";font:800 11px Arial,sans-serif;letter-spacing:.12em}
 
