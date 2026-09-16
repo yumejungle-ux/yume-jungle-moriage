@@ -583,14 +583,19 @@ main { position: relative; isolation: isolate; overflow: clip; }
 .x-feed {
   position: relative;
   overflow: hidden;
-  display: grid;
-  grid-template-columns: minmax(410px,.9fr) minmax(500px,1.1fr);
-  gap: clamp(55px, 8vw, 130px);
-  align-items: center;
   padding: clamp(85px, 10vw, 150px) max(6vw, 32px);
   background: linear-gradient(135deg, #081f17, #0b3e2a 64%, #071b14);
   color: var(--white);
 }
+.x-feed-inner {
+  width: min(1180px, 100%);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  gap: clamp(52px, 6vw, 82px);
+  align-items: start;
+}
+.x-feed-heading { min-width: 0; }
 .x-feed::before {
   content: "";
   position: absolute;
@@ -822,7 +827,8 @@ footer > small { grid-column: 2; grid-row: 1 / 3; font: 9px Arial, sans-serif; l
   .schedule-heading p { margin-top: 20px; font-size: 14px; line-height: 1.8; }
   .schedule-card > div { grid-template-columns: 72px 1fr; gap: 10px; padding: 19px 2px; }
   .schedule-card > div span { grid-column: 2; }
-  .x-feed { grid-template-columns: 1fr; gap: 38px; padding: 64px 20px; }
+  .x-feed { padding: 64px 20px; }
+  .x-feed-inner { grid-template-columns: 1fr; gap: 38px; }
   .x-feed::before { left: -76vw; bottom: 24%; width: 128vw; opacity: .1; }
   .x-feed-heading h2 { font-size: 36px; }
   .x-feed-heading > p { margin-top: 20px; font-size: 14px; line-height: 1.8; }
@@ -1072,14 +1078,18 @@ footer > small { grid-column: 2; grid-row: 1 / 3; font: 9px Arial, sans-serif; l
   .unfinished-image img{max-height:500px}
   .unfinished-copy{max-width:540px}
   .final-cta h2{font-size:clamp(42px,4.8vw,64px)}
-  .x-feed{grid-template-columns:minmax(360px,460px) minmax(460px,620px);justify-content:center;gap:clamp(55px,7vw,95px);padding:90px max(6vw,44px)}
-  .x-feed-heading h2{font-size:clamp(38px,3.7vw,52px)}
   .x-timeline-frame{width:100%;min-width:0}
   .section-secrets .hidden-word{font-size:clamp(27px,2.5vw,39px);opacity:.07}
   .section-secrets .hidden-word:nth-child(odd){left:2.5%!important}
   .section-secrets .hidden-word:nth-child(even){left:auto!important;right:2.5%!important}
 }
 @media(max-width:760px){.x-timeline-iframe{height:421px}}
+
+@media(min-width:801px){
+  .x-feed{padding:90px max(6vw,44px)}
+  .x-feed-heading h2{font-size:clamp(38px,3.7vw,52px)}
+  .x-post-card{width:100%;max-width:620px;justify-self:end}
+}
 
 /* Clear expectations around the film and participation journey. */
 .movie-sound-note{
