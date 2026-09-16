@@ -13,7 +13,7 @@ const experiences = [
 ];
 const stories = [
   { number: "STORY 01", title: "「好きな自分」を、隠さなくなった。", text: "普段は普通の服で参加していた女性。「ここは夢を語る場所だから、本当の自分で来たら？」という一言をきっかけに、次回は大好きなゴスロリ姿で参加しました。やがて発言も、やりたいことも、はっきりと変わっていきました。", result: "本当の自分を言葉と姿にした瞬間、人生の輪郭が変わり始めた。" },
-  { number: "STORY 02", title: "家を失った兄弟の想いが、人を動かした。", text: "火事で全焼した祖父の美容室を再建したい。兄弟が会場でその想いを語ると、応援の輪が一気に広がりました。", result: "クラウドファンディングは、イベント当日に目標を達成。" },
+  { number: "STORY 02", title: "家を失った兄妹の想いが、人を動かした。", text: "火事で全焼した祖父の美容室を再建したい。兄妹が会場でその想いを語ると、応援の輪が一気に広がりました。", result: "クラウドファンディングは、イベント当日に目標を達成。" },
   { number: "STORY 03", title: "想いが、仕事のご縁につながった。", text: "整体と医療を掛け合わせた店舗の挑戦を会場で伝えると、40人以上が無料施術チケットに並び、15〜20人が実際に来店しました。", result: "その後、1か月以内に6人が顧客へ。結果は、想いのあとからついてきた。" },
 ];
 function HiddenWords({items}:{items:Array<{word:string;number:string;top:string;left:string;tilt:string}>}){return <div className="section-secrets" aria-hidden="true">{items.map(item=><span key={item.word} className="hidden-word" data-word={item.word} style={{"--secret-top":item.top,"--secret-left":item.left,"--secret-tilt":item.tilt} as CSSProperties}><small>{item.number}</small>{item.word}</span>)}</div>}
