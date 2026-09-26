@@ -1,13 +1,51 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react";
 
-const OPENING_LINES = [
-  "想いは言葉に。夢は挑戦に。",
-  "挑戦は、誰かの希望に。",
+declare global {
+  interface Window {
+    dataLayer?: IArguments[];
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
+const OPENING_LINES = ["想いは言葉に。夢は挑戦に。", "挑戦は、誰かの希望に。"];
+
+const HIDDEN_WORDS = [
+  "想い",
+  "言葉",
+  "夢",
+  "覚悟",
+  "主人公",
+  "挑戦",
+  "応援",
+  "ご縁",
+  "希望",
+  "行動",
 ];
 
-const HIDDEN_WORDS = ["想い", "言葉", "夢", "覚悟", "主人公", "挑戦", "応援", "ご縁", "希望", "行動"];
+function track(
+  eventName: string,
+  params: Record<string, string | number | boolean> = {},
+) {
+  window.gtag?.("event", eventName, params);
+}
+
+function getLocationLabel(element: Element) {
+  if (element.closest(".story-header")) return "header";
+  if (element.closest(".story-hero")) return "hero";
+  if (element.closest(".final-cta")) return "final_cta";
+  if (element.closest(".story-footer")) return "footer";
+  if (element.closest(".story-mobile-cta")) return "mobile_fixed";
+  const section = element.closest<HTMLElement>("section[id]");
+  return section?.id || "content";
+}
 
 function AnimatedLine({ text, offset }: { text: string; offset: number }) {
   return (
@@ -15,8 +53,14 @@ function AnimatedLine({ text, offset }: { text: string; offset: number }) {
       {Array.from(text).map((character, index) => (
         <span
           key={`${text}-${index}`}
-          className={character === "夢" || character === "挑戦" || character === "希望" ? "accent" : ""}
-          style={{ "--char-delay": `${offset + index * 42}ms` } as CSSProperties}
+          className={
+            character === "夢" || character === "挑戦" || character === "希望"
+              ? "accent"
+              : ""
+          }
+          style={
+            { "--char-delay": `${offset + index * 42}ms` } as CSSProperties
+          }
         >
           {character === " " ? "\u00a0" : character}
         </span>
@@ -26,7 +70,9 @@ function AnimatedLine({ text, offset }: { text: string; offset: number }) {
 }
 
 export default function SiteMotion() {
-  const [opening, setOpening] = useState<"idle" | "playing" | "leaving" | "done">("idle");
+  const [opening, setOpening] = useState<
+    "idle" | "playing" | "leaving" | "done"
+  >("idle");
   const [foundWords, setFoundWords] = useState<string[]>([]);
   const [lastFound, setLastFound] = useState("");
   const [rewardOpen, setRewardOpen] = useState(false);
@@ -36,11 +82,13 @@ export default function SiteMotion() {
 
   useEffect(() => {
     const root = document.documentElement;
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     const revealTargets = Array.from(
       document.querySelectorAll<HTMLElement>(
-        ".story-label, .why-grid > *, .comic-strip, .why-photo, .question-section blockquote, .question-copy, .grandfather-grid > *, .philosophy-section > *, .experience-heading > *, .experience-cards article, .experience-photo, .movie-heading > *, .movie-frame, .stories-intro > *, .story-list article, .unfinished-section > *, .final-cta > *:not(.final-cta-bg)"
-      )
+        ".story-label, .why-grid > *, .comic-strip, .why-photo, .question-section blockquote, .question-copy, .grandfather-grid > *, .philosophy-section > *, .experience-heading > *, .experience-cards article, .experience-photo, .movie-heading > *, .movie-frame, .stories-intro > *, .story-list article, .unfinished-section > *, .final-cta > *:not(.final-cta-bg)",
+      ),
     );
 
     revealTargets.forEach((element, index) => {
@@ -50,12 +98,18 @@ export default function SiteMotion() {
     root.classList.add("motion-ready", "intro-playing");
 
     const frame = window.requestAnimationFrame(() => setOpening("playing"));
-    const leaveTimer = window.setTimeout(() => setOpening("leaving"), reducedMotion ? 250 : 3200);
-    const finishTimer = window.setTimeout(() => {
-      setOpening("done");
-      setGuideOpen(true);
-      root.classList.remove("intro-playing");
-    }, reducedMotion ? 450 : 3720);
+    const leaveTimer = window.setTimeout(
+      () => setOpening("leaving"),
+      reducedMotion ? 250 : 3200,
+    );
+    const finishTimer = window.setTimeout(
+      () => {
+        setOpening("done");
+        setGuideOpen(true);
+        root.classList.remove("intro-playing");
+      },
+      reducedMotion ? 450 : 3720,
+    );
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -66,31 +120,82 @@ export default function SiteMotion() {
           }
         });
       },
-      { threshold: 0.12, rootMargin: "0px 0px -8%" }
+      { threshold: 0.12, rootMargin: "0px 0px -8%" },
     );
     revealTargets.forEach((element) => observer.observe(element));
+
+    const viewedSections = new Set<string>();
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const section = entry.target as HTMLElement;
+          if (!section.id || viewedSections.has(section.id)) return;
+          viewedSections.add(section.id);
+          track("section_view", {
+            section_id: section.id,
+            section_name: section.getAttribute("aria-label") || section.id,
+          });
+        });
+      },
+      { threshold: 0.5 },
+    );
+    document
+      .querySelectorAll<HTMLElement>("section[id]")
+      .forEach((section) => sectionObserver.observe(section));
+
+    const scrollThresholds = [25, 50, 75, 90];
+    const sentScrollDepths = new Set<number>();
+    const storagePrefix = `ga4-scroll:${window.location.pathname}:`;
+    scrollThresholds.forEach((threshold) => {
+      if (window.sessionStorage.getItem(`${storagePrefix}${threshold}`))
+        sentScrollDepths.add(threshold);
+    });
 
     let scrollFrame = 0;
     const updateScroll = () => {
       scrollFrame = 0;
       const scrollY = window.scrollY;
-      const scrollRange = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+      const scrollRange = Math.max(
+        document.documentElement.scrollHeight - window.innerHeight,
+        1,
+      );
       const journeyProgress = Math.min(Math.max(scrollY / scrollRange, 0), 1);
+      const percentScrolled = journeyProgress * 100;
+      scrollThresholds.forEach((threshold) => {
+        if (percentScrolled < threshold || sentScrollDepths.has(threshold))
+          return;
+        sentScrollDepths.add(threshold);
+        window.sessionStorage.setItem(`${storagePrefix}${threshold}`, "1");
+        track("scroll_depth", {
+          percent_scrolled: threshold,
+          page_path: window.location.pathname,
+        });
+      });
       root.classList.toggle("page-scrolled", scrollY > 80);
-      root.style.setProperty("--parallax-shift", `${Math.min(scrollY * 0.075, 86)}px`);
+      root.style.setProperty(
+        "--parallax-shift",
+        `${Math.min(scrollY * 0.075, 86)}px`,
+      );
       root.style.setProperty("--jungle-drift", `${scrollY * 0.035}px`);
       root.style.setProperty("--jungle-drift-reverse", `${scrollY * -0.022}px`);
-      root.style.setProperty("--jungle-sway", `${Math.sin(scrollY / 340) * 2.4}deg`);
+      root.style.setProperty(
+        "--jungle-sway",
+        `${Math.sin(scrollY / 340) * 2.4}deg`,
+      );
       root.style.setProperty("--journey-progress", `${journeyProgress * 100}%`);
     };
     const onScroll = () => {
-      if (!scrollFrame) scrollFrame = window.requestAnimationFrame(updateScroll);
+      if (!scrollFrame)
+        scrollFrame = window.requestAnimationFrame(updateScroll);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     updateScroll();
 
     const glow = document.querySelector<HTMLElement>(".pointer-glow");
-    const secrets = Array.from(document.querySelectorAll<HTMLElement>(".hidden-word"));
+    const secrets = Array.from(
+      document.querySelectorAll<HTMLElement>(".hidden-word"),
+    );
     let foundTimer = 0;
     const discoverAt = (clientX: number, clientY: number, radius: number) => {
       secrets.forEach((secret) => {
@@ -111,7 +216,16 @@ export default function SiteMotion() {
           secret.classList.remove("is-lit");
           setFoundWords(Array.from(foundWordsRef.current));
           setLastFound(word);
-          if (foundWordsRef.current.size === HIDDEN_WORDS.length) setRewardOpen(true);
+          track("hidden_word_found", {
+            hidden_word: word,
+            found_count: foundWordsRef.current.size,
+          });
+          if (foundWordsRef.current.size === HIDDEN_WORDS.length) {
+            setRewardOpen(true);
+            track("treasure_complete", {
+              hidden_word_count: HIDDEN_WORDS.length,
+            });
+          }
           window.clearTimeout(foundTimer);
           foundTimer = window.setTimeout(() => setLastFound(""), 1800);
         }
@@ -156,8 +270,71 @@ export default function SiteMotion() {
     window.addEventListener("pointerup", onTouchEnd, { passive: true });
     window.addEventListener("pointercancel", onTouchEnd, { passive: true });
 
+    const onDocumentClick = (event: MouseEvent) => {
+      const link = (event.target as Element | null)?.closest<HTMLAnchorElement>(
+        "a[href]",
+      );
+      if (!link) return;
+      const href = link.href;
+      const location = getLocationLabel(link);
+      const label = (link.innerText || link.getAttribute("aria-label") || "")
+        .trim()
+        .replace(/\s+/g, " ")
+        .slice(0, 100);
+      const isLine = href.includes("line.me/");
+      track("click_cta", {
+        cta_location: location,
+        cta_type: isLine
+          ? "line"
+          : href.startsWith(window.location.origin) || href.startsWith("#")
+            ? "internal"
+            : "outbound",
+        cta_text: label,
+        destination_url: href,
+      });
+      if (isLine) {
+        const leadId = `${location}:${label}`;
+        track("click_line", {
+          cta_location: location,
+          cta_text: label,
+          destination_url: href,
+        });
+        track("generate_lead", {
+          lead_type: "official_line_click",
+          cta_location: location,
+          lead_id: leadId,
+        });
+      }
+    };
+    document.addEventListener("click", onDocumentClick);
+
+    const video =
+      document.querySelector<HTMLVideoElement>(".movie-frame video");
+    const videoProgress = new Set<number>();
+    const onVideoPlay = () =>
+      track("video_start", { video_title: "夢のジャングル 公式PV" });
+    const onVideoTimeUpdate = () => {
+      if (!video?.duration) return;
+      const progress = (video.currentTime / video.duration) * 100;
+      [25, 50, 75].forEach((threshold) => {
+        if (progress < threshold || videoProgress.has(threshold)) return;
+        videoProgress.add(threshold);
+        track("video_progress", {
+          video_title: "夢のジャングル 公式PV",
+          video_percent: threshold,
+        });
+      });
+    };
+    const onVideoEnded = () =>
+      track("video_complete", { video_title: "夢のジャングル 公式PV" });
+    video?.addEventListener("play", onVideoPlay, { once: true });
+    video?.addEventListener("timeupdate", onVideoTimeUpdate);
+    video?.addEventListener("ended", onVideoEnded);
+
     const magneticTargets = Array.from(
-      document.querySelectorAll<HTMLElement>(".section-cta, .primary-button, .line-search")
+      document.querySelectorAll<HTMLElement>(
+        ".section-cta, .primary-button, .line-search",
+      ),
     );
     const cleanups = magneticTargets.map((element) => {
       const move = (event: PointerEvent) => {
@@ -186,11 +363,16 @@ export default function SiteMotion() {
       window.clearTimeout(leaveTimer);
       window.clearTimeout(finishTimer);
       observer.disconnect();
+      sectionObserver.disconnect();
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerdown", onTouchReveal);
       window.removeEventListener("pointerup", onTouchEnd);
       window.removeEventListener("pointercancel", onTouchEnd);
+      document.removeEventListener("click", onDocumentClick);
+      video?.removeEventListener("play", onVideoPlay);
+      video?.removeEventListener("timeupdate", onVideoTimeUpdate);
+      video?.removeEventListener("ended", onVideoEnded);
       window.clearTimeout(foundTimer);
       cleanups.forEach((cleanup) => cleanup());
       root.classList.remove("motion-ready", "intro-playing");
@@ -202,8 +384,16 @@ export default function SiteMotion() {
     <>
       {opening !== "done" && (
         <div className={`opening-intro is-${opening}`} aria-hidden="true">
-          <img className="opening-vine opening-vine-left" src="/assets/vine-ribbon-v1.png" alt="" />
-          <img className="opening-vine opening-vine-right" src="/assets/vine-ribbon-v1.png" alt="" />
+          <img
+            className="opening-vine opening-vine-left"
+            src="/assets/vine-ribbon-v1.png"
+            alt=""
+          />
+          <img
+            className="opening-vine opening-vine-right"
+            src="/assets/vine-ribbon-v1.png"
+            alt=""
+          />
           <div className="opening-grain" />
           <div className="opening-copy">
             <small>YUME NO JUNGLE / MORIAGE CONNECT</small>
@@ -215,45 +405,115 @@ export default function SiteMotion() {
         </div>
       )}
       {guideOpen && (
-        <div className="treasure-guide" role="dialog" aria-modal="true" aria-labelledby="treasure-guide-title">
+        <div
+          className="treasure-guide"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="treasure-guide-title"
+        >
           <div className="treasure-guide-card">
             <small>SECRET EXPLORATION</small>
-            <h2 id="treasure-guide-title">このページには、<br /><em>10個の言葉</em>が隠されています。</h2>
-            <p>暗いジャングルをライトで探索し、理念につながる言葉をすべて見つけてください。</p>
+            <h2 id="treasure-guide-title">
+              このページには、
+              <br />
+              <em>10個の言葉</em>が隠されています。
+            </h2>
+            <p>
+              暗いジャングルをライトで探索し、理念につながる言葉をすべて見つけてください。
+            </p>
             <div className="guide-actions">
-              <span><b>PC</b> カーソルを動かす</span>
-              <span><b>スマホ</b> 指でなぞる</span>
+              <span>
+                <b>PC</b> カーソルを動かす
+              </span>
+              <span>
+                <b>スマホ</b> 指でなぞる
+              </span>
             </div>
-            <strong className="guide-reward">10個見つけると、参加時の限定特典が解放。</strong>
-            <button type="button" onClick={() => setGuideOpen(false)}>探索を始める <span>↗</span></button>
+            <strong className="guide-reward">
+              10個見つけると、参加時の限定特典が解放。
+            </strong>
+            <button type="button" onClick={() => setGuideOpen(false)}>
+              探索を始める <span>↗</span>
+            </button>
           </div>
         </div>
       )}
       <div className="jungle-world" aria-hidden="true">
-        <img className="vine-ribbon vine-ribbon-one" src="/assets/vine-ribbon-v1.png" alt="" />
-        <img className="vine-ribbon vine-ribbon-two" src="/assets/vine-ribbon-v1.png" alt="" />
-        <img className="vine-ribbon vine-ribbon-three" src="/assets/vine-ribbon-v1.png" alt="" />
-        <img className="vine-ribbon vine-ribbon-four" src="/assets/vine-ribbon-v1.png" alt="" />
+        <img
+          className="vine-ribbon vine-ribbon-one"
+          src="/assets/vine-ribbon-v1.png"
+          alt=""
+        />
+        <img
+          className="vine-ribbon vine-ribbon-two"
+          src="/assets/vine-ribbon-v1.png"
+          alt=""
+        />
+        <img
+          className="vine-ribbon vine-ribbon-three"
+          src="/assets/vine-ribbon-v1.png"
+          alt=""
+        />
+        <img
+          className="vine-ribbon vine-ribbon-four"
+          src="/assets/vine-ribbon-v1.png"
+          alt=""
+        />
       </div>
       <div className="treasure-route" aria-hidden="true">
         <span className="route-origin">START</span>
         <i className="route-marker" />
         <span className="route-goal">DREAM</span>
       </div>
-      <div className={`treasure-counter${foundWords.length === HIDDEN_WORDS.length ? " is-complete" : ""}`} aria-live="polite">
+      <div
+        className={`treasure-counter${foundWords.length === HIDDEN_WORDS.length ? " is-complete" : ""}`}
+        aria-live="polite"
+      >
         <small>HIDDEN WORDS</small>
-        <strong>{String(foundWords.length).padStart(2, "0")} <i>/ 10</i></strong>
-        <span>{foundWords.length === HIDDEN_WORDS.length ? "想いは言葉に。夢は行動に。" : "ライトで言葉を探す"}</span>
+        <strong>
+          {String(foundWords.length).padStart(2, "0")} <i>/ 10</i>
+        </strong>
+        <span>
+          {foundWords.length === HIDDEN_WORDS.length
+            ? "想いは言葉に。夢は行動に。"
+            : "ライトで言葉を探す"}
+        </span>
       </div>
-      {lastFound && <div className="secret-found-toast" aria-live="polite"><small>DISCOVERED</small><strong>{lastFound}</strong></div>}
+      {lastFound && (
+        <div className="secret-found-toast" aria-live="polite">
+          <small>DISCOVERED</small>
+          <strong>{lastFound}</strong>
+        </div>
+      )}
       {foundWords.length === HIDDEN_WORDS.length && rewardOpen && (
-        <div className="treasure-complete" role="dialog" aria-modal="true" aria-label="発見者限定特典">
-          <button type="button" className="treasure-close" onClick={() => setRewardOpen(false)} aria-label="閉じる">×</button>
+        <div
+          className="treasure-complete"
+          role="dialog"
+          aria-modal="true"
+          aria-label="発見者限定特典"
+        >
+          <button
+            type="button"
+            className="treasure-close"
+            onClick={() => setRewardOpen(false)}
+            aria-label="閉じる"
+          >
+            ×
+          </button>
           <small>ALL WORDS DISCOVERED</small>
           <strong>発見者限定特典、解放。</strong>
-          <p>あなたが、次の主人公です。<br />公式LINEで合言葉を送ると、参加時の限定特典をご案内します。</p>
-          <div className="treasure-code"><small>SECRET WORD</small><b>JUNGLE10</b></div>
-          <a href="#official-line" onClick={() => setRewardOpen(false)}>公式LINEで特典を受け取る <span>↗</span></a>
+          <p>
+            あなたが、次の主人公です。
+            <br />
+            公式LINEで合言葉を送ると、参加時の限定特典をご案内します。
+          </p>
+          <div className="treasure-code">
+            <small>SECRET WORD</small>
+            <b>JUNGLE10</b>
+          </div>
+          <a href="#official-line" onClick={() => setRewardOpen(false)}>
+            公式LINEで特典を受け取る <span>↗</span>
+          </a>
           <em>この画面はスクリーンショットで保存できます</em>
         </div>
       )}

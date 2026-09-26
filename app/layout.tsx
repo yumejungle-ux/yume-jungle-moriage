@@ -33,7 +33,14 @@ export const metadata: Metadata = {
     siteName: "夢のジャングル｜森上交流会",
     title: "夢のジャングル｜森上交流会",
     description: "想いは言葉に。夢は挑戦に。",
-    images: [{ url: "/og.png", width: 1733, height: 909, alt: "夢のジャングル 森上交流会" }],
+    images: [
+      {
+        url: "/og.png",
+        width: 1733,
+        height: 909,
+        alt: "夢のジャングル 森上交流会",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -43,7 +50,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ja">
       <head>
@@ -51,10 +60,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           dangerouslySetInnerHTML={{
             __html: `
               (() => {
-                if (["localhost", "127.0.0.1"].includes(window.location.hostname)) return;
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 window.gtag = gtag;
+                if (["localhost", "127.0.0.1"].includes(window.location.hostname)) return;
                 gtag("js", new Date());
                 gtag("config", "${gaMeasurementId}");
                 const script = document.createElement("script");
