@@ -1,0 +1,9 @@
+.next
+.vinext
+dist
+node_modules
+outputs
+pnpm-lock.yaml
+public/assets
+work
+*.zip
