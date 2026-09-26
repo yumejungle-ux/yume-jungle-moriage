@@ -39,6 +39,7 @@ yarn-error.log*
 /.config/
 /outputs/
 /work/
+*.tsbuildinfo
 
 # deployed source keeps the LP lightweight; the local preview still includes the full PV
 /public/assets/yume-jungle-pv.mp4
